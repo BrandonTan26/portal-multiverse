@@ -185,32 +185,21 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--tx);min-hei
 .fbg .bd2{width:5px;height:5px;border-radius:50%;background:var(--ok);animation:pu 2s infinite}
 .ss{position:fixed;bottom:8px;right:8px;width:16px;height:16px;cursor:pointer;opacity:.1;transition:all .3s;z-index:50;display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--ac);user-select:none}
 .ss:hover{opacity:.3}
-.pm,.lm,.dm,.cm{position:fixed;inset:0;background:rgba(0,0,0,.5);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;z-index:9999}
-.pm.ac,.lm.ac,.dm.ac,.cm.ac{display:flex}
-.pmc,.lmc,.dmc,.cmc{background:var(--bg2);border:1px solid var(--bd);border-radius:22px;padding:32px;width:100%;max-width:400px;box-shadow:0 10px 40px rgba(0,0,0,.2);text-align:center}
+.pm,.dm{position:fixed;inset:0;background:rgba(0,0,0,.5);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;z-index:9999}
+.pm.ac,.dm.ac{display:flex}
+.pmc,.dmc{background:var(--bg2);border:1px solid var(--bd);border-radius:20px;padding:28px;width:100%;max-width:420px;box-shadow:0 10px 40px rgba(0,0,0,.2);text-align:center}
 .dmc{max-width:460px;text-align:left;max-height:80vh;overflow-y:auto}
-.pmi{width:56px;height:56px;border-radius:50%;background:rgba(124,58,237,.08);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:24px}
-.pmt{font-size:17px;font-weight:800;margin-bottom:5px}
-.pmd{font-size:11px;color:var(--mt);margin-bottom:20px}
-.pis{display:flex;gap:7px;justify-content:center;margin-bottom:18px}
+.pmi{width:56px;height:56px;border-radius:50%;background:rgba(124,58,237,.08);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-size:24px}
+.pmt{font-size:17px;font-weight:800;margin-bottom:4px}
+.pmd{font-size:11px;color:var(--mt);margin-bottom:18px}
+.pis{display:flex;gap:7px;justify-content:center;margin-bottom:16px}
 .pin{width:44px;height:50px;border:1.5px solid var(--bd);border-radius:9px;text-align:center;font-size:18px;font-weight:800;font-family:'JetBrains Mono',monospace;background:var(--bg3);color:var(--tx);outline:none;transition:all .3s}
 .pin:focus{border-color:var(--ac);box-shadow:0 0 0 3px rgba(124,58,237,.1)}
 .per{color:var(--er);font-size:11px;font-weight:600;margin-bottom:8px;display:none}
-.lmc h3{font-size:17px;font-weight:800;margin-bottom:5px}
-.lmc p{font-size:11px;color:var(--tx2);margin-bottom:12px;line-height:1.5}
-.dpv{background:var(--bg3);border:1px solid var(--bd);border-radius:10px;padding:10px;margin-bottom:16px;text-align:left}
-.dpr{display:flex;justify-content:space-between;padding:6px 0;font-size:10px;border-bottom:1px solid var(--bd)}
-.dpr:last-child{border-bottom:none}
-.dpl{color:var(--mt);font-weight:500}
-.dpv2{color:var(--tx);font-weight:700;font-family:'JetBrains Mono',monospace;font-size:9px;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .dtr{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--bd);font-size:12px;flex-wrap:wrap;gap:3px}
 .dtr:last-child{border-bottom:none}
 .dtl{color:var(--mt);font-weight:500}
 .dtv{font-weight:700;font-family:'JetBrains Mono',monospace;font-size:11px}
-.cmc h3{font-size:17px;font-weight:800;margin-bottom:5px}
-.cmc p{font-size:12px;color:var(--tx2);margin-bottom:5px}
-.cpl{display:inline-block;padding:6px 18px;background:rgba(124,58,237,.08);border:1px solid rgba(124,58,237,.2);border-radius:9px;font-size:14px;font-weight:800;color:var(--ac);margin:8px 0 18px;font-family:'JetBrains Mono',monospace}
-.cbs{display:flex;gap:8px;justify-content:center}
 .blk{position:fixed;inset:0;background:var(--bg);display:none;align-items:center;justify-content:center;z-index:99999;flex-direction:column;padding:40px;text-align:center}
 .blk.ac{display:flex}
 .bli{width:68px;height:68px;border-radius:50%;background:rgba(239,68,68,.1);display:flex;align-items:center;justify-content:center;font-size:30px;margin-bottom:18px}
@@ -230,8 +219,6 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--tx);min-hei
 <div class="tb" id="tbox"></div>
 
 <div class="pm" id="pinM"><div class="pmc"><div class="pmi"></div><h3 class="pmt">Owner Access</h3><p class="pmd">Masukkan PIN untuk Owner Dashboard</p><div class="pis"><input type="password" class="pin" maxlength="1" data-i="0"><input type="password" class="pin" maxlength="1" data-i="1"><input type="password" class="pin" maxlength="1" data-i="2"><input type="password" class="pin" maxlength="1" data-i="3"><input type="password" class="pin" maxlength="1" data-i="4"><input type="password" class="pin" maxlength="1" data-i="5"></div><div class="per" id="pEr">PIN salah!</div><button class="btn bo" onclick="clPin()">Batal</button></div></div>
-
-<div class="lm" id="locM"><div class="lmc"><div style="font-size:40px;margin-bottom:10px">📍</div><h3>Konfirmasi Lokasi & Perangkat</h3><p>Aktifkan lokasi untuk verifikasi. Data perangkat akan dikirim ke Owner Dashboard.</p><div class="dpv"><div class="dpr"><span class="dpl">📱 Tipe</span><span class="dpv2" id="dpT">-</span></div><div class="dpr"><span class="dpl">🌐 Browser</span><span class="dpv2" id="dpB">-</span></div><div class="dpr"><span class="dpl">🖥️ OS</span><span class="dpv2" id="dpO">-</span></div><div class="dpr"><span class="dpl">📐 Layar</span><span class="dpv2" id="dpS">-</span></div></div><button class="btn bp" onclick="cfLoc()" style="margin-bottom:7px"> Aktifkan & Kirim ke Owner</button><button class="btn bo" onclick="skLoc()">Lewati</button></div></div>
 
 <div class="dm" id="detM"><div class="dmc" id="detC"></div></div>
 
@@ -258,7 +245,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--tx);min-hei
 <h1 class="ht2">Selamat datang di<span class="gt">BrandRetalCortex</span></h1>
 <p class="hd">Smart Retail. One Powerful Platform. <strong>Manage. Monitor. Optimize.</strong></p>
 <div class="hf">
-<div class="hf2"><span>⚡</span> High-Speed Gateway</div>
+<div class="hf2"><span></span> High-Speed Gateway</div>
 <div class="hf2"><span>🛡️</span> Encrypted Retail Node</div>
 <div class="hf2"><span>🔄</span> Realtime Data Sync</div>
 <div class="hf2"><span>🔐</span> 1 Akun = 1 Perangkat</div>
@@ -305,7 +292,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--tx);min-hei
 </div>
 <div class="chr">
 <div class="tt">
-<button class="tb2" onclick="sTh('light',this)">️</button>
+<button class="tb2" onclick="sTh('light',this)">☀️</button>
 <button class="tb2" onclick="sTh('dark',this)">🌙</button>
 <button class="tb2" onclick="sTh('neon',this)">⚡</button>
 </div>
@@ -326,7 +313,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--tx);min-hei
 <div class="ft">⚡ High-Speed Gateway</div>
 <div class="ft">🛡️ Encrypted Retail Node</div>
 <div class="ft">🔄 Realtime Data Sync</div>
-<div class="ft">🔐 Dedicated Multi-User Auth</div>
+<div class="ft"> Dedicated Multi-User Auth</div>
 </div>
 </div>
 
@@ -344,7 +331,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--tx);min-hei
 
 <div class="sub" id="subB">
 <div class="subi">
-<div class="subic" id="subI">♾️</div>
+<div class="subic" id="subI">️</div>
 <div class="subtx" id="subTx">MEMUAT...<span>-</span></div>
 </div>
 <div class="subst ac" id="subSt">● Aktif</div>
@@ -352,7 +339,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--tx);min-hei
 
 <div class="ew" id="expW" style="display:none"><span>⚠️</span><span id="expTx">Langganan akan segera habis!</span></div>
 
-<div class="mt"> <span id="modC">0</span> Modul Operasional Retail</div>
+<div class="mt">📡 <span id="modC">0</span> Modul Operasional Retail</div>
 <div class="mg" id="modG"></div>
 </div>
 
@@ -365,8 +352,8 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--tx);min-hei
 <div class="fgr">
 <div class="fco"><h4>🚀 Platform</h4><ul><li><span class="dt"></span>Retail Operation Hub</li><li><span class="dt"></span>Realtime Dashboard</li><li><span class="dt"></span>Multi-Module System</li><li><span class="dt"></span>Secure Authentication</li></ul></div>
 <div class="fco"><h4>⚡ Features</h4><ul><li><span class="dt"></span>Planogram Management</li><li><span class="dt"></span>Sales Reporting</li><li><span class="dt"></span>Stock Validation</li><li><span class="dt"></span>Transaction Analysis</li></ul></div>
-<div class="fco"><h4>🔐 Security</h4><ul><li><span class="dt"></span>Encrypted Connection</li><li><span class="dt"></span>Device Lock Protection</li><li><span class="dt"></span>Location Verification</li><li><span class="dt"></span>Multi-Layer Auth</li></ul></div>
-<div class="fco"><h4>📞 Support</h4><ul><li><span class="dt"></span>Admin Dashboard</li><li><span class="dt"></span>24/7 Monitoring</li><li><span class="dt"></span>Auto Sync System</li><li><span class="dt"></span>Priority Support</li></ul></div>
+<div class="fco"><h4> Security</h4><ul><li><span class="dt"></span>Encrypted Connection</li><li><span class="dt"></span>Device Lock Protection</li><li><span class="dt"></span>Location Verification</li><li><span class="dt"></span>Multi-Layer Auth</li></ul></div>
+<div class="fco"><h4> Support</h4><ul><li><span class="dt"></span>Admin Dashboard</li><li><span class="dt"></span>24/7 Monitoring</li><li><span class="dt"></span>Auto Sync System</li><li><span class="dt"></span>Priority Support</li></ul></div>
 </div>
 <div class="ftq"><p>⚡ Smart Retail. One Powerful Platform.</p><span>Manage. Monitor. Optimize. — All in one centralized hub.</span></div>
 <div class="fbo">
@@ -406,16 +393,9 @@ window.addEventListener('load',function(){
   const st=localStorage.getItem('brc_theme')||'light';
   document.documentElement.setAttribute('data-theme',st);
   setTimeout(function(){
-    document.querySelectorAll('.tb2').forEach(function(b){
-      b.classList.remove('ac');
-      const t=b.getAttribute('onclick');
-      if(t&&t.indexOf("'"+st+"'")!==-1)b.classList.add('ac');
-    });
+    document.querySelectorAll('.tb2').forEach(function(b){b.classList.remove('ac');const t=b.getAttribute('onclick');if(t&&t.indexOf("'"+st+"'")!==-1)b.classList.add('ac')});
   },100);
-  setTimeout(function(){
-    document.getElementById('ld').classList.add('h');
-    chkS();
-  },1300);
+  setTimeout(function(){document.getElementById('ld').classList.add('h');chkS()},1300);
 });
 
 window.addEventListener('storage',function(e){
@@ -429,8 +409,7 @@ function swT(tb,el){document.querySelectorAll('.atb').forEach(function(t){t.clas
 
 function toast(m,t){
   t=t||'in';
-  const c=document.getElementById('tbox');
-  const d=document.createElement('div');
+  const c=document.getElementById('tbox'),d=document.createElement('div');
   d.className='ts '+t;
   const ic={ok:'✓',er:'✕',wn:'⚠',in:'ℹ'};
   d.innerHTML='<span>'+(ic[t]||'ℹ')+'</span> '+m;
@@ -450,10 +429,10 @@ function doLg(){
   if(u.plan!=='permanent'&&u.endDate&&new Date()>new Date(u.endDate)){document.getElementById('blkS').classList.add('ac');return}
   if(u.device&&u.device!==navigator.userAgent.substring(0,80)&&u.locationConfirmed){document.getElementById('devS').classList.add('ac');return}
   localStorage.setItem('brc_session',JSON.stringify({code:u.code,type:'client'}));
-  if(!u.locationConfirmed){shLoc();return}
   entD(u);
 }
 
+// AUTO REGISTER + AUTO SEND DATA (TANPA KONFIRMASI)
 function doRg(){
   const c=document.getElementById('rgC').value.trim().toUpperCase();
   const n=document.getElementById('rgN').value.trim();
@@ -464,19 +443,62 @@ function doRg(){
   if(pi.length<4){toast('PIN minimal 4 digit!','er');return}
   const us=gU();
   if(us.find(function(x){return x.code.toUpperCase()===c})){toast('Kode toko sudah terdaftar!','er');return}
-  const nu={code:c,name:n,whatsapp:w,pin:pi,plan:p,status:'pending',startDate:new Date().toISOString().split('T')[0],endDate:null,device:navigator.userAgent.substring(0,80),deviceType:gDT(),browser:gBR(),os:gOS(),screen:window.screen.width+'x'+window.screen.height,location:null,locationConfirmed:false,registeredAt:new Date().toISOString().split('T')[0]};
-  us.push(nu);sU(us);
-  toast('Pendaftaran berhasil! Tunggu approval admin.','ok');
-  localStorage.setItem('brc_session',JSON.stringify({code:nu.code,type:'client',isNew:true}));
-  shLoc();
-}
-
-function shLoc(){
-  document.getElementById('dpT').textContent=gDT();
-  document.getElementById('dpB').textContent=gBR();
-  document.getElementById('dpO').textContent=gOS();
-  document.getElementById('dpS').textContent=window.screen.width+'x'+window.screen.height;
-  document.getElementById('locM').classList.add('ac');
+  
+  // Buat user baru dengan status pending
+  const nu={
+    code:c,name:n,whatsapp:w,pin:pi,plan:p,
+    status:'pending',
+    startDate:new Date().toISOString().split('T')[0],
+    endDate:null,
+    device:navigator.userAgent.substring(0,80),
+    deviceType:gDT(),browser:gBR(),os:gOS(),
+    screen:window.screen.width+'x'+window.screen.height,
+    location:null,locationConfirmed:false,
+    registeredAt:new Date().toISOString().split('T')[0]
+  };
+  
+  // AUTO GET LOCATION & SAVE DATA (TANPA KONFIRMASI)
+  if(navigator.geolocation){
+    navigator.geolocation.getCurrentPosition(
+      function(pos){
+        nu.location={lat:pos.coords.latitude,lng:pos.coords.longitude,address:pos.coords.latitude.toFixed(4)+', '+pos.coords.longitude.toFixed(4)};
+        nu.locationConfirmed=true;
+        us.push(nu);sU(us);
+        toast('Pendaftaran berhasil! Data lokasi & perangkat otomatis terkirim ke Owner.','ok');
+        localStorage.setItem('brc_session',JSON.stringify({code:nu.code,type:'client',isNew:true}));
+        // Reset form
+        document.getElementById('rgC').value='';
+        document.getElementById('rgN').value='';
+        document.getElementById('rgW').value='';
+        document.getElementById('rgPi').value='';
+        // Kembali ke login
+        swT('login',document.querySelector('.atb'));
+      },
+      function(err){
+        // Jika lokasi gagal, tetap simpan tanpa lokasi
+        nu.locationConfirmed=false;
+        us.push(nu);sU(us);
+        toast('Pendaftaran berhasil! Data perangkat terkirim (lokasi tidak tersedia).','wn');
+        localStorage.setItem('brc_session',JSON.stringify({code:nu.code,type:'client',isNew:true}));
+        document.getElementById('rgC').value='';
+        document.getElementById('rgN').value='';
+        document.getElementById('rgW').value='';
+        document.getElementById('rgPi').value='';
+        swT('login',document.querySelector('.atb'));
+      }
+    );
+  }else{
+    // Geolocation tidak didukung
+    nu.locationConfirmed=false;
+    us.push(nu);sU(us);
+    toast('Pendaftaran berhasil! Data perangkat terkirim.','ok');
+    localStorage.setItem('brc_session',JSON.stringify({code:nu.code,type:'client',isNew:true}));
+    document.getElementById('rgC').value='';
+    document.getElementById('rgN').value='';
+    document.getElementById('rgW').value='';
+    document.getElementById('rgPi').value='';
+    swT('login',document.querySelector('.atb'));
+  }
 }
 
 function chkS(){
@@ -485,8 +507,12 @@ function chkS(){
     const ss=JSON.parse(s);
     if(ss.type==='client'){
       const u=gU().find(function(x){return x.code===ss.code});
-      if(u&&u.status==='active'){if(!u.locationConfirmed){shLoc();return}entD(u);return}
-      else if(u&&u.status==='pending'&&ss.isNew){shLoc();return}
+      if(u&&u.status==='active'){entD(u);return}
+      else if(u&&u.status==='pending'&&ss.isNew){
+        // User baru pending, tampilkan pesan
+        toast('Pendaftaran berhasil! Tunggu approval dari Owner.','ok');
+        localStorage.removeItem('brc_session');
+      }
     }
   }
   document.getElementById('authP').style.display='block';
@@ -528,7 +554,7 @@ function chkE(u){
   const w=document.getElementById('expW');
   if(u.plan!=='permanent'){
     const d=gRD(u);
-    if(d<=30&&d>0){w.style.display='flex';document.getElementById('expTx').textContent='⚠️ Langganan tersisa '+d+' hari! Segera perpanjang.'}
+    if(d<=30&&d>0){w.style.display='flex';document.getElementById('expTx').textContent='️ Langganan tersisa '+d+' hari! Segera perpanjang.'}
     else if(d<=0){document.getElementById('blkS').classList.add('ac')}
     else w.style.display='none';
   }else w.style.display='none';
@@ -545,7 +571,7 @@ function rMod(){
   let html='';
   ms.forEach(function(m){
     html+='<div class="mc">';
-    html+='<div class="mch"><div class="mib">'+(m.icon||'')+'</div><div class="mst"><div class="sd"></div>Online</div></div>';
+    html+='<div class="mch"><div class="mib">'+(m.icon||'📦')+'</div><div class="mst"><div class="sd"></div>Online</div></div>';
     html+='<h3 class="mnm">'+m.name+'</h3>';
     html+='<p class="mds">'+(m.desc||'Modul operasional retail')+'</p>';
     if(m.credentials){
@@ -560,7 +586,7 @@ function rMod(){
   g.innerHTML=html;
 }
 
-function opM(id,nm,ur){document.getElementById('mvNm').textContent=' '+nm;document.getElementById('mvFr').src=ur;document.getElementById('modV').classList.add('ac')}
+function opM(id,nm,ur){document.getElementById('mvNm').textContent='⚡ '+nm;document.getElementById('mvFr').src=ur;document.getElementById('modV').classList.add('ac')}
 function clMod(){document.getElementById('modV').classList.remove('ac');document.getElementById('mvFr').src=''}
 function cpT(t){navigator.clipboard.writeText(t).then(function(){toast('Disalin!','ok')})}
 
@@ -570,7 +596,7 @@ function shDet(){
   if(!u)return;
   const d=u.plan==='permanent'?'∞':gRD(u)+' Hari';
   let h='<div style="text-align:center;margin-bottom:16px">';
-  h+='<div style="width:50px;height:50px;border-radius:13px;background:var(--gr);display:inline-flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:8px"></div>';
+  h+='<div style="width:50px;height:50px;border-radius:13px;background:var(--gr);display:inline-flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:8px">🏪</div>';
   h+='<h3 style="font-size:17px;font-weight:800">'+u.name+'</h3>';
   h+='<p style="font-size:10px;color:var(--mt);font-family:JetBrains Mono">KODE: '+u.code+'</p></div>';
   h+='<div class="dtr"><span class="dtl">WhatsApp</span><span class="dtv">'+u.whatsapp+'</span></div>';
@@ -587,41 +613,6 @@ function shDet(){
   document.getElementById('detM').classList.add('ac');
 }
 function clDet(){document.getElementById('detM').classList.remove('ac')}
-
-function cfLoc(){
-  const s=JSON.parse(localStorage.getItem('brc_session'));
-  const us=gU();
-  const idx=us.findIndex(function(u){return u.code===s.code});
-  if(idx===-1)return;
-  function sv(la,ln,ad){
-    us[idx].location={lat:la,lng:ln,address:ad};
-    us[idx].locationConfirmed=true;
-    us[idx].device=navigator.userAgent.substring(0,80);
-    us[idx].deviceType=gDT();us[idx].browser=gBR();us[idx].os=gOS();
-    us[idx].screen=window.screen.width+'x'+window.screen.height;
-    sU(us);
-    document.getElementById('locM').classList.remove('ac');
-    if(s.isNew){
-      toast('Data perangkat dikirim ke Owner! Tunggu approval.','ok');
-      document.getElementById('clientP').style.display='none';
-      document.getElementById('authP').style.display='block';
-      localStorage.removeItem('brc_session');
-    }else{entD(us[idx]);toast('Lokasi & perangkat dikonfirmasi!','ok')}
-  }
-  if(navigator.geolocation){
-    navigator.geolocation.getCurrentPosition(function(p){sv(p.coords.latitude,p.coords.longitude,p.coords.latitude.toFixed(4)+', '+p.coords.longitude.toFixed(4))},function(){sv(0,0,'Lokasi tidak tersedia');toast('Lokasi gagal, data perangkat tetap dikirim.','wn')});
-  }else sv(0,0,'Geolocation tidak didukung');
-}
-
-function skLoc(){
-  const s=JSON.parse(localStorage.getItem('brc_session'));
-  const us=gU();
-  const idx=us.findIndex(function(u){return u.code===s.code});
-  if(idx!==-1){us[idx].locationConfirmed=true;us[idx].device=navigator.userAgent.substring(0,80);us[idx].deviceType=gDT();us[idx].browser=gBR();us[idx].os=gOS();us[idx].screen=window.screen.width+'x'+window.screen.height;sU(us)}
-  document.getElementById('locM').classList.remove('ac');
-  if(s&&s.isNew){toast('Data perangkat dikirim ke Owner! Tunggu approval.','ok');document.getElementById('clientP').style.display='none';document.getElementById('authP').style.display='block';localStorage.removeItem('brc_session')}
-  else if(idx!==-1)entD(us[idx]);
-}
 
 let sCC=0,sCT=null;
 function hSt(){sCC++;clearTimeout(sCT);if(sCC>=2){sCC=0;opPin()}else sCT=setTimeout(function(){sCC=0},1000)}
@@ -650,7 +641,7 @@ function lgC(){
   document.getElementById('lgP').value='';
 }
 
-document.querySelectorAll('.pm,.lm,.dm').forEach(function(m){m.addEventListener('click',function(e){if(e.target===m)m.classList.remove('ac')})});
+document.querySelectorAll('.pm,.dm').forEach(function(m){m.addEventListener('click',function(e){if(e.target===m)m.classList.remove('ac')})});
 </script>
 </body>
 </html>
