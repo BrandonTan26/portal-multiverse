@@ -1,647 +1,898 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BrandRetalCortex</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-:root{--bg:#f4f1ff;--bg2:#fff;--bg3:#ede9fe;--tx:#1e1b4b;--tx2:#64748b;--mt:#94a3b8;--ac:#7c3aed;--ac2:#a78bfa;--ok:#10b981;--er:#ef4444;--wn:#f59e0b;--bd:#e5e7eb;--gr:linear-gradient(135deg,#7c3aed,#a78bfa,#60a5fa);--gb:linear-gradient(135deg,#7c3aed,#a78bfa)}
-[data-theme="dark"]{--bg:#0f0b1e;--bg2:#1a1530;--bg3:#241e3f;--tx:#f1f5f9;--tx2:#cbd5e1;--mt:#64748b;--ac:#8b5cf6;--ac2:#a78bfa;--bd:#2d2545;--gr:linear-gradient(135deg,#8b5cf6,#a78bfa,#60a5fa);--gb:linear-gradient(135deg,#8b5cf6,#a78bfa)}
-[data-theme="neon"]{--bg:#05020f;--bg2:#0a0618;--bg3:#110d24;--tx:#f5f3ff;--tx2:#c4b5fd;--mt:#7c6fa0;--ac:#c084fc;--ac2:#e879f9;--bd:rgba(192,132,252,.15);--gr:linear-gradient(135deg,#c084fc,#e879f9,#22d3ee);--gb:linear-gradient(90deg,#e879f9,#c084fc,#22d3ee)}
-body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--tx);min-height:100vh;overflow-x:hidden;transition:background .4s,color .4s}
-.orbs{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
-.orb{position:absolute;border-radius:50%;filter:blur(100px);opacity:.15;animation:of 20s infinite}
-.o1{width:500px;height:500px;background:#7c3aed;top:-150px;left:-150px}
-.o2{width:400px;height:400px;background:#60a5fa;bottom:-150px;right:-150px;animation-delay:-7s}
-.o3{width:350px;height:350px;background:#a78bfa;top:40%;left:40%;animation-delay:-14s}
-@keyframes of{0%,100%{transform:translate(0,0)}50%{transform:translate(40px,-30px)}}
-[data-theme="light"] .orbs{display:none}
-#ld{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:99999;transition:opacity .6s}
-#ld.h{opacity:0;pointer-events:none}
-.ll{width:80px;height:80px;border-radius:20px;background:var(--gr);display:flex;align-items:center;justify-content:center;margin-bottom:20px;animation:lp 2s infinite;box-shadow:0 0 40px rgba(124,58,237,.3)}
-@keyframes lp{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
-.ll svg{width:40px;height:40px;fill:#fff}
-.ls{width:44px;height:44px;border:3px solid var(--bd);border-top-color:var(--ac);border-radius:50%;animation:sp .8s linear infinite}
-@keyframes sp{to{transform:rotate(360deg)}}
-.lt{margin-top:18px;font-size:12px;color:var(--mt);font-weight:600;letter-spacing:3px;text-transform:uppercase;font-family:'JetBrains Mono',monospace}
-.tb{position:fixed;top:20px;right:20px;z-index:10000;display:flex;flex-direction:column;gap:10px}
-.ts{padding:13px 18px;border-radius:12px;font-size:13px;font-weight:600;color:#fff;box-shadow:0 8px 24px rgba(0,0,0,.15);animation:ti .4s,to2 .4s 3.5s forwards;max-width:340px;display:flex;align-items:center;gap:8px}
-.ts.ok{background:linear-gradient(135deg,#10b981,#34d399)}
-.ts.er{background:linear-gradient(135deg,#ef4444,#f87171)}
-.ts.wn{background:linear-gradient(135deg,#f59e0b,#fbbf24);color:#000}
-.ts.in{background:var(--gr)}
-@keyframes ti{from{transform:translateX(120%);opacity:0}to{transform:translateX(0);opacity:1}}
-@keyframes to2{to{opacity:0;transform:translateY(-20px)}}
-.ap{min-height:100vh;background:var(--bg);position:relative;display:flex;flex-direction:column}
-.ah{padding:20px 40px;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:10}
-.hb{display:flex;align-items:center;gap:14px}
-.hl{width:44px;height:44px;border-radius:12px;background:var(--gr);display:flex;align-items:center;justify-content:center;box-shadow:0 8px 20px rgba(124,58,237,.2)}
-.hl svg{width:22px;height:22px;fill:#fff}
-.hb h1{font-size:15px;font-weight:800;font-family:'JetBrains Mono',monospace;letter-spacing:1.5px}
-[data-theme="neon"] .hb h1{background:var(--gr);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.hb p{font-size:9px;font-weight:600;color:var(--mt);letter-spacing:2.5px;text-transform:uppercase;margin-top:2px}
-.tt{display:flex;background:var(--bg3);border-radius:14px;padding:4px;border:1px solid var(--bd);gap:2px}
-.tb2{width:40px;height:36px;border:none;background:transparent;border-radius:10px;cursor:pointer;font-size:15px;transition:all .3s;color:var(--mt);display:flex;align-items:center;justify-content:center}
-.tb2.ac{background:var(--gr);color:#fff;box-shadow:0 4px 12px rgba(124,58,237,.3)}
-.ah2{flex:1;display:grid;grid-template-columns:1fr 1fr;gap:60px;padding:40px 60px 60px;align-items:center;position:relative;z-index:10;max-width:1400px;margin:0 auto;width:100%}
-.hL{max-width:600px}
-.ht{display:inline-flex;align-items:center;gap:8px;padding:8px 18px;background:rgba(124,58,237,.08);border:1px solid rgba(124,58,237,.2);border-radius:30px;font-size:10px;font-weight:700;color:var(--ac);text-transform:uppercase;letter-spacing:2px;margin-bottom:28px;font-family:'JetBrains Mono',monospace}
-.ht .td{width:7px;height:7px;border-radius:50%;background:var(--ok);animation:pu 2s infinite}
-@keyframes pu{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
-.ht2{font-size:54px;font-weight:900;line-height:1.1;margin-bottom:18px}
-.ht2 .gt{background:var(--gr);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;display:block}
-[data-theme="neon"] .ht2 .gt{filter:drop-shadow(0 0 20px rgba(192,132,252,.3))}
-.hd{font-size:16px;color:var(--tx2);line-height:1.6;margin-bottom:30px}
-.hd strong{color:var(--tx);font-weight:700}
-.hf{display:flex;flex-wrap:wrap;gap:10px}
-.hf2{display:inline-flex;align-items:center;gap:7px;padding:10px 16px;background:var(--bg2);border:1px solid var(--bd);border-radius:28px;font-size:12px;font-weight:600;color:var(--tx2);transition:all .3s}
-.hf2:hover{border-color:var(--ac);color:var(--ac);transform:translateY(-2px)}
-.acw{display:flex;justify-content:flex-end}
-.ac{background:var(--bg2);backdrop-filter:blur(20px);border:1px solid var(--bd);border-radius:24px;padding:34px;width:100%;max-width:420px;box-shadow:0 10px 40px rgba(124,58,237,.08)}
-[data-theme="neon"] .ac{box-shadow:0 0 60px rgba(192,132,252,.08)}
-.at{display:flex;background:var(--bg3);border-radius:14px;padding:4px;margin-bottom:26px;border:1px solid var(--bd)}
-.atb{flex:1;padding:11px;border:none;background:transparent;border-radius:10px;font-size:13px;font-weight:700;color:var(--mt);cursor:pointer;transition:all .3s;font-family:'Inter',sans-serif}
-.atb.ac{background:var(--bg2);color:var(--tx);box-shadow:0 2px 8px rgba(0,0,0,.08)}
-[data-theme="neon"] .atb.ac{background:rgba(192,132,252,.15);color:#e879f9}
-.af{display:none}
-.af.ac{display:block;animation:fu .4s}
-@keyframes fu{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-.fg{margin-bottom:16px}
-.fl{display:block;font-size:10px;font-weight:700;color:var(--mt);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:7px;font-family:'JetBrains Mono',monospace}
-.fi,.fs{width:100%;padding:13px 15px;border:1.5px solid var(--bd);border-radius:11px;font-size:14px;font-family:'Inter',sans-serif;background:var(--bg3);color:var(--tx);transition:all .3s;outline:none}
-.fi:focus,.fs:focus{border-color:var(--ac);box-shadow:0 0 0 3px rgba(124,58,237,.1)}
-[data-theme="neon"] .fi:focus{border-color:#c084fc;box-shadow:0 0 0 3px rgba(192,132,252,.15)}
-.fs{cursor:pointer;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2.5'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 13px center;padding-right:38px}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 24px;border:none;border-radius:11px;font-size:14px;font-weight:700;font-family:'Inter',sans-serif;cursor:pointer;transition:all .3s}
-.bp{background:var(--gb);color:#fff;width:100%;padding:15px;font-size:15px;box-shadow:0 8px 24px rgba(124,58,237,.25)}
-[data-theme="neon"] .bp{background:linear-gradient(90deg,#e879f9,#c084fc,#22d3ee);color:#0a0618;font-weight:800;box-shadow:0 8px 32px rgba(232,121,249,.3)}
-.bp:hover{transform:translateY(-2px)}
-.bo{background:transparent;border:1.5px solid var(--bd);color:var(--tx);width:100%}
-.bo:hover{border-color:var(--ac);color:var(--ac)}
-.bs{padding:7px 14px;font-size:12px;border-radius:9px}
-.bd{background:transparent;border:1.5px solid var(--er);color:var(--er)}
-.bd:hover{background:var(--er);color:#fff}
-.cl{min-height:100vh;display:flex;flex-direction:column;position:relative;z-index:1}
-.ch{background:var(--bg2);backdrop-filter:blur(20px);border-bottom:1px solid var(--bd);padding:14px 30px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;flex-wrap:wrap;gap:12px}
-.chl{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
-.cl2{width:36px;height:36px;border-radius:10px;background:var(--gr);display:flex;align-items:center;justify-content:center}
-.cl2 svg{width:17px;height:17px;fill:#fff}
-.cb{font-size:12px;font-weight:800;font-family:'JetBrains Mono',monospace;letter-spacing:1px}
-.cb span{display:block;font-size:8px;font-weight:500;color:var(--mt);font-family:'Inter',sans-serif;letter-spacing:1.5px;text-transform:uppercase}
-.chr{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.sb{display:inline-flex;align-items:center;gap:5px;padding:5px 12px;background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.25);border-radius:18px;font-size:9px;font-weight:700;color:var(--ok);text-transform:uppercase;letter-spacing:1.5px;font-family:'JetBrains Mono',monospace}
-.sd{width:6px;height:6px;border-radius:50%;background:var(--ok);animation:pu 2s infinite}
-.uc{display:flex;align-items:center;gap:7px;padding:4px 12px 4px 4px;background:var(--bg3);border:1px solid var(--bd);border-radius:18px;cursor:pointer;transition:all .3s}
-.uc:hover{border-color:var(--ac)}
-.ua{width:26px;height:26px;border-radius:50%;background:var(--gr);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:#fff}
-.un{font-size:11px;font-weight:700}
-.ud{font-size:8px;color:var(--mt);font-family:'JetBrains Mono',monospace}
-.cc{flex:1;padding:30px;max-width:1300px;margin:0 auto;width:100%;position:relative;z-index:1}
-.wb{background:var(--bg3);border-radius:22px;padding:38px;margin-bottom:26px;border:1px solid var(--bd);position:relative;overflow:hidden}
-.wb::before{content:'';position:absolute;top:-50%;right:-20%;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(124,58,237,.08),transparent 70%)}
-[data-theme="neon"] .wb::before{background:radial-gradient(circle,rgba(192,132,252,.1),transparent 70%)}
-.wt{display:inline-flex;align-items:center;gap:7px;padding:6px 14px;background:rgba(124,58,237,.08);border:1px solid rgba(124,58,237,.2);border-radius:18px;font-size:9px;font-weight:700;color:var(--ac);text-transform:uppercase;letter-spacing:2px;margin-bottom:14px;font-family:'JetBrains Mono',monospace}
-.wt2{font-size:28px;font-weight:900;margin-bottom:6px;line-height:1.2}
-.wt2 .hl{background:var(--gr);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.wd{font-size:14px;color:var(--tx2);margin-bottom:18px}
-.wf{display:flex;flex-wrap:wrap;gap:7px}
-.ft{display:inline-flex;align-items:center;gap:5px;padding:6px 12px;background:var(--bg2);border:1px solid var(--bd);border-radius:18px;font-size:11px;font-weight:600;color:var(--tx2)}
-.si{background:var(--bg2);border:1px solid var(--bd);border-radius:18px;padding:20px;margin-bottom:22px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px}
-.sif{display:flex;align-items:center;gap:14px}
-.sic{width:46px;height:46px;border-radius:13px;background:var(--gr);display:flex;align-items:center;justify-content:center}
-.sic svg{width:20px;height:20px;fill:#fff}
-.snm{font-size:17px;font-weight:800;font-family:'JetBrains Mono',monospace}
-.scl{font-size:9px;color:var(--mt);text-transform:uppercase;letter-spacing:1px}
-.scv{font-size:11px;font-weight:700;font-family:'JetBrains Mono',monospace;color:var(--ac);background:rgba(124,58,237,.08);padding:2px 9px;border-radius:5px;border:1px solid rgba(124,58,237,.2)}
-.sub{background:linear-gradient(135deg,rgba(124,58,237,.05),rgba(96,165,250,.05));border:1px solid rgba(124,58,237,.12);border-radius:14px;padding:16px 20px;margin-bottom:22px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
-[data-theme="neon"] .sub{background:linear-gradient(135deg,rgba(192,132,252,.04),rgba(34,211,238,.04));border-color:rgba(192,132,252,.15)}
-.subi{display:flex;align-items:center;gap:10px}
-.subic{font-size:20px}
-.subtx{font-size:12px;font-weight:700}
-.subtx span{display:block;font-size:10px;font-weight:400;color:var(--mt);margin-top:1px}
-.subst{padding:5px 14px;border-radius:18px;font-size:11px;font-weight:700}
-.subst.ac{background:rgba(16,185,129,.1);color:var(--ok);border:1px solid rgba(16,185,129,.25)}
-.subst.ex{background:rgba(245,158,11,.1);color:var(--wn);border:1px solid rgba(245,158,11,.25);animation:wp 2s infinite}
-@keyframes wp{0%,100%{box-shadow:0 0 0 0 rgba(245,158,11,.3)}50%{box-shadow:0 0 0 8px rgba(245,158,11,0)}}
-.ew{background:linear-gradient(135deg,rgba(245,158,11,.08),rgba(239,68,68,.06));border:1px solid rgba(245,158,11,.2);border-radius:12px;padding:12px 16px;margin-bottom:22px;display:flex;align-items:center;gap:8px;font-size:12px;font-weight:600;color:var(--wn)}
-.mt{font-size:11px;font-weight:700;color:var(--ac);text-transform:uppercase;letter-spacing:2px;margin-bottom:16px;display:flex;align-items:center;gap:7px;font-family:'JetBrains Mono',monospace}
-.mg{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-bottom:40px}
-.mc{background:var(--bg2);border:1px solid var(--bd);border-radius:18px;padding:24px;transition:all .4s;position:relative;overflow:hidden}
-.mc::before{content:'';position:absolute;top:0;left:0;width:100%;height:3px;background:var(--gr);opacity:0;transition:opacity .3s}
-.mc:hover{transform:translateY(-4px);box-shadow:0 10px 40px rgba(124,58,237,.1);border-color:var(--ac)}
-.mc:hover::before{opacity:1}
-[data-theme="neon"] .mc:hover{box-shadow:0 0 30px rgba(192,132,252,.1)}
-.mch{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px}
-.mib{width:44px;height:44px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:20px;background:var(--bg3);border:1px solid var(--bd)}
-.mst{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.18);border-radius:12px;font-size:9px;font-weight:700;color:var(--ok);text-transform:uppercase}
-.mnm{font-size:15px;font-weight:800;font-family:'JetBrains Mono',monospace;margin-bottom:4px}
-.mds{font-size:11px;color:var(--tx2);line-height:1.5;margin-bottom:16px}
-.mbt{width:100%;padding:12px;background:var(--gb);color:#fff;border:none;border-radius:10px;font-size:12px;font-weight:700;font-family:'Inter',sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:all .3s}
-[data-theme="neon"] .mbt{background:linear-gradient(90deg,#e879f9,#c084fc,#22d3ee);color:#0a0618;font-weight:800}
-.mbt:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(124,58,237,.3)}
-.mcr{background:rgba(245,158,11,.05);border:1px solid rgba(245,158,11,.12);border-radius:10px;padding:10px;margin-bottom:12px}
-.mct{font-size:9px;font-weight:700;color:var(--wn);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;display:flex;align-items:center;gap:4px}
-.crg{display:grid;grid-template-columns:1fr 1fr;gap:5px}
-.cri{background:var(--bg3);border-radius:6px;padding:7px;border:1px solid var(--bd)}
-.crl{font-size:8px;color:var(--mt);text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px}
-.crv{font-size:11px;font-weight:700;font-family:'JetBrains Mono',monospace;color:var(--tx);display:flex;align-items:center;justify-content:space-between}
-.cpb{background:none;border:none;cursor:pointer;font-size:12px;color:var(--mt);padding:1px}
-.es{text-align:center;padding:50px 20px;background:var(--bg2);border:1.5px dashed var(--bd);border-radius:18px}
-.esi{font-size:50px;margin-bottom:14px;opacity:.4}
-.es h3{font-size:16px;font-weight:800;margin-bottom:6px}
-.es p{font-size:12px;color:var(--mt);max-width:380px;margin:0 auto;line-height:1.6}
-.mv{position:fixed;inset:0;background:var(--bg);z-index:1000;display:none;flex-direction:column}
-.mv.ac{display:flex}
-.mvh{background:var(--bg2);border-bottom:1px solid var(--bd);padding:11px 18px;display:flex;align-items:center;justify-content:space-between}
-.mvt{font-size:13px;font-weight:700}
-.mvc{padding:7px 14px;background:var(--er);color:#fff;border:none;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif}
-.mvf{flex:1;border:none;width:100%;background:#fff}
-.cf{background:var(--bg2);border-top:1px solid var(--bd);position:relative;overflow:hidden;margin-top:auto}
-.cf::before{content:'';position:absolute;top:0;left:0;width:100%;height:3px;background:var(--gr)}
-[data-theme="neon"] .cf::before{background:linear-gradient(90deg,#e879f9,#c084fc,#22d3ee,#e879f9);background-size:200% 100%;animation:ns 3s linear infinite}
-@keyframes ns{0%{background-position:0 50%}100%{background-position:200% 50%}}
-.fm{padding:36px 30px 22px;max-width:1300px;margin:0 auto}
-.fbs{display:flex;align-items:center;gap:14px;margin-bottom:22px;flex-wrap:wrap}
-.fbl{width:44px;height:44px;border-radius:12px;background:var(--gr);display:flex;align-items:center;justify-content:center}
-.fbl svg{width:22px;height:22px;fill:#fff}
-.fbt h2{font-size:16px;font-weight:900;font-family:'JetBrains Mono',monospace;letter-spacing:1px;background:var(--gr);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:2px}
-.fbt p{font-size:10px;color:var(--mt);font-weight:600;letter-spacing:2px;text-transform:uppercase}
-.fdl{width:100%;height:1px;background:linear-gradient(90deg,transparent,var(--bd),transparent);margin-bottom:22px}
-.fgr{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:20px;margin-bottom:22px}
-.fco h4{font-size:10px;font-weight:700;color:var(--tx);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px}
-.fco ul{list-style:none}
-.fco ul li{font-size:11px;color:var(--tx2);padding:3px 0;display:flex;align-items:center;gap:6px}
-.fco ul li .dt{width:4px;height:4px;border-radius:50%;background:var(--ac);opacity:.5}
-.ftq{text-align:center;padding:14px;background:var(--bg3);border-radius:11px;margin-bottom:18px;border:1px solid var(--bd)}
-.ftq p{font-size:12px;font-weight:700;margin-bottom:2px}
-.ftq span{font-size:10px;color:var(--mt)}
-.fbo{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;padding-top:14px;border-top:1px solid var(--bd)}
-.fcr{font-size:11px;font-weight:600;color:var(--mt);font-family:'JetBrains Mono',monospace;user-select:none;pointer-events:none}
-.fcr span{background:var(--gr);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:800}
-.fbd{display:flex;gap:5px;flex-wrap:wrap}
-.fbg{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;background:var(--bg3);border:1px solid var(--bd);border-radius:14px;font-size:9px;font-weight:600;color:var(--tx2)}
-.fbg .bd2{width:5px;height:5px;border-radius:50%;background:var(--ok);animation:pu 2s infinite}
-.ss{position:fixed;bottom:8px;right:8px;width:16px;height:16px;cursor:pointer;opacity:.1;transition:all .3s;z-index:50;display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--ac);user-select:none}
-.ss:hover{opacity:.3}
-.pm,.dm{position:fixed;inset:0;background:rgba(0,0,0,.5);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;z-index:9999}
-.pm.ac,.dm.ac{display:flex}
-.pmc,.dmc{background:var(--bg2);border:1px solid var(--bd);border-radius:20px;padding:28px;width:100%;max-width:420px;box-shadow:0 10px 40px rgba(0,0,0,.2);text-align:center}
-.dmc{max-width:460px;text-align:left;max-height:80vh;overflow-y:auto}
-.pmi{width:56px;height:56px;border-radius:50%;background:rgba(124,58,237,.08);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-size:24px}
-.pmt{font-size:17px;font-weight:800;margin-bottom:4px}
-.pmd{font-size:11px;color:var(--mt);margin-bottom:18px}
-.pis{display:flex;gap:7px;justify-content:center;margin-bottom:16px}
-.pin{width:44px;height:50px;border:1.5px solid var(--bd);border-radius:9px;text-align:center;font-size:18px;font-weight:800;font-family:'JetBrains Mono',monospace;background:var(--bg3);color:var(--tx);outline:none;transition:all .3s}
-.pin:focus{border-color:var(--ac);box-shadow:0 0 0 3px rgba(124,58,237,.1)}
-.per{color:var(--er);font-size:11px;font-weight:600;margin-bottom:8px;display:none}
-.dtr{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--bd);font-size:12px;flex-wrap:wrap;gap:3px}
-.dtr:last-child{border-bottom:none}
-.dtl{color:var(--mt);font-weight:500}
-.dtv{font-weight:700;font-family:'JetBrains Mono',monospace;font-size:11px}
-.blk{position:fixed;inset:0;background:var(--bg);display:none;align-items:center;justify-content:center;z-index:99999;flex-direction:column;padding:40px;text-align:center}
-.blk.ac{display:flex}
-.bli{width:68px;height:68px;border-radius:50%;background:rgba(239,68,68,.1);display:flex;align-items:center;justify-content:center;font-size:30px;margin-bottom:18px}
-.blt{font-size:20px;font-weight:900;margin-bottom:8px;color:var(--er)}
-.bld{font-size:13px;color:var(--tx2);max-width:360px;line-height:1.6;margin-bottom:22px}
-@media(max-width:1024px){.ah2{grid-template-columns:1fr;gap:40px;padding:30px 24px 50px}.acw{justify-content:center}.ht2{font-size:40px}}
-@media(max-width:768px){.ah{padding:14px 18px}.ah2{padding:20px 18px 40px}.ht2{font-size:30px}.hd{font-size:14px}.ac{padding:24px 20px}.ch{padding:10px 14px}.cc{padding:18px 14px}.mg{grid-template-columns:1fr}.wb{padding:24px 18px}.wt2{font-size:22px}.si{flex-direction:column;align-items:flex-start}.fgr{grid-template-columns:1fr 1fr}.un{display:none}.cb span{display:none}}
-::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--bd);border-radius:3px}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>BrandRetailCortex.store - Client Portal</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --bg: #f4f6fc;
+      --card-bg: #ffffff;
+      --card-border: #e2e8f0;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --accent-grad: linear-gradient(135deg, #6366f1 0%, #06b6d4 100%);
+      --primary: #6366f1;
+      --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+      --badge-bg: #f1f5f9;
+      --input-bg: #f8fafc;
+      --banner-grad: linear-gradient(135deg, #f1f3fd 0%, #eef2ff 100%);
+      --box-kredensial-bg: #fefce8;
+      --box-kredensial-border: #fef08a;
+    }
+    [data-theme="dark"] {
+      --bg: #070a14;
+      --card-bg: #0e1424;
+      --card-border: #1e293b;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --accent-grad: linear-gradient(135deg, #8b5cf6 0%, #06b6d4 100%);
+      --primary: #8b5cf6;
+      --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+      --badge-bg: #131c31;
+      --input-bg: #12192c;
+      --banner-grad: linear-gradient(135deg, #10162a 0%, #171f38 100%);
+      --box-kredensial-bg: #1c1a14;
+      --box-kredensial-border: #423815;
+    }
+    [data-theme="neon"] {
+      --bg: #020205;
+      --card-bg: #0a0b16;
+      --card-border: #ff007f;
+      --text: #00f0ff;
+      --text-muted: #ff77c6;
+      --accent-grad: linear-gradient(135deg, #ff007f 0%, #00f0ff 100%);
+      --primary: #ff007f;
+      --card-shadow: 0 0 25px rgba(255, 0, 127, 0.25);
+      --badge-bg: #15102a;
+      --input-bg: #120e24;
+      --banner-grad: linear-gradient(135deg, #150a24 0%, #091a2e 100%);
+      --box-kredensial-bg: #1a0f18;
+      --box-kredensial-border: #ff007f;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body { background-color: var(--bg); color: var(--text); min-height: 100vh; transition: 0.3s; }
+
+    /* Spinner Loading */
+    #loadingScreen {
+      position: fixed; inset: 0; background: var(--bg); z-index: 99999;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px;
+    }
+    .spinner-wrap {
+      width: 70px; height: 70px; border-radius: 50%;
+      border: 3px solid transparent; border-top-color: #06b6d4; border-right-color: var(--primary);
+      animation: spin 0.8s linear infinite; display: flex; align-items: center; justify-content: center;
+    }
+    @keyframes spin { 100% { transform: rotate(360deg); } }
+
+    /* Top Nav */
+    .top-nav {
+      background: var(--card-bg); border-bottom: 1px solid var(--card-border);
+      padding: 12px 28px; display: flex; align-items: center; justify-content: space-between;
+      position: sticky; top: 0; z-index: 100;
+    }
+    .brand-left { display: flex; align-items: center; gap: 12px; }
+    .brand-title { font-size: 15px; font-weight: 800; letter-spacing: 0.5px; }
+    .status-pill-online {
+      background: rgba(16, 185, 129, 0.15); color: #10b981; font-size: 10px;
+      font-weight: 800; padding: 3px 10px; border-radius: 20px;
+    }
+    .top-actions { display: flex; align-items: center; gap: 12px; }
+    .theme-toggle-box {
+      background: var(--input-bg); border: 1px solid var(--card-border);
+      border-radius: 20px; display: flex; padding: 3px; gap: 4px;
+    }
+    .theme-btn {
+      background: none; border: none; color: var(--text-muted); padding: 5px 10px;
+      border-radius: 14px; cursor: pointer; font-size: 13px;
+    }
+    .theme-btn.active { background: var(--accent-grad); color: #fff; }
+    .user-pill {
+      background: var(--input-bg); border: 1px solid var(--card-border);
+      padding: 6px 14px; border-radius: 12px; font-size: 12px; font-weight: 700;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .kode-badge { background: #e0e7ff; color: #4338ca; padding: 2px 6px; border-radius: 6px; font-size: 10px; font-weight: 800; }
+    .btn-keluar {
+      border: 1px solid #fee2e2; background: #fff1f2; color: #e11d48;
+      padding: 8px 16px; border-radius: 12px; cursor: pointer; font-size: 12px; font-weight: 700;
+      display: flex; align-items: center; gap: 6px;
+    }
+
+    /* Container */
+    .portal-container { max-width: 1240px; margin: 0 auto; padding: 24px; }
+
+    /* Welcome Banner */
+    .welcome-card {
+      background: var(--banner-grad); border: 1px solid var(--card-border);
+      border-radius: 24px; padding: 36px; margin-bottom: 24px; box-shadow: var(--card-shadow);
+    }
+    .sub-badge {
+      display: inline-flex; align-items: center; gap: 6px; font-size: 11px;
+      font-weight: 800; color: #10b981; background: rgba(16, 185, 129, 0.12);
+      padding: 6px 14px; border-radius: 20px; margin-bottom: 16px; letter-spacing: 0.5px;
+    }
+    .welcome-title { font-size: 38px; font-weight: 900; line-height: 1.15; margin-bottom: 12px; }
+    .welcome-title span { background: var(--accent-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .welcome-subtitle { color: var(--text-muted); font-size: 15px; margin-bottom: 24px; }
+    .welcome-pills { display: flex; flex-wrap: wrap; gap: 10px; }
+    .pill {
+      background: var(--card-bg); border: 1px solid var(--card-border);
+      padding: 8px 14px; border-radius: 12px; font-size: 12px; font-weight: 600;
+      display: inline-flex; align-items: center; gap: 8px; color: var(--text-muted);
+    }
+
+    /* Identitas & Status Langganan */
+    .card-info {
+      background: var(--card-bg); border: 1px solid var(--card-border);
+      border-radius: 24px; padding: 28px; margin-bottom: 28px; box-shadow: var(--card-shadow);
+    }
+    .info-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 16px; }
+    .info-profile { display: flex; align-items: center; gap: 16px; }
+    .icon-store {
+      width: 52px; height: 52px; border-radius: 16px; background: var(--accent-grad);
+      color: white; display: flex; align-items: center; justify-content: center; font-size: 22px;
+    }
+    .status-row { font-size: 13px; color: var(--text-muted); margin-bottom: 16px; line-height: 1.6; }
+    .perm-banner {
+      background: var(--banner-grad); border: 1px solid var(--card-border);
+      border-radius: 16px; padding: 18px 24px; display: flex; align-items: center; gap: 16px;
+    }
+
+    /* Modul Header */
+    .modul-section-head {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 20px; flex-wrap: wrap; gap: 12px;
+    }
+    .modul-badge {
+      display: inline-flex; align-items: center; gap: 8px; font-size: 11px;
+      font-weight: 800; color: #6366f1; background: rgba(99, 102, 241, 0.12);
+      padding: 6px 14px; border-radius: 20px; letter-spacing: 0.5px; margin-bottom: 6px;
+    }
+
+    /* Module Grid */
+    .modules-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 24px; }
+    @media(max-width: 600px){ .modules-grid { grid-template-columns: 1fr; } }
+
+    .module-card {
+      background: var(--card-bg); border: 1px solid var(--card-border);
+      border-radius: 24px; padding: 24px; display: flex; flex-direction: column;
+      justify-content: space-between; box-shadow: var(--card-shadow); transition: transform 0.2s;
+    }
+    .module-card:hover { transform: translateY(-3px); }
+    .mod-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; }
+    .mod-icon-box {
+      width: 48px; height: 48px; border-radius: 14px; background: var(--input-bg);
+      border: 1px solid var(--card-border); display: flex; align-items: center; justify-content: center;
+      color: var(--primary); font-size: 20px;
+    }
+    .mod-title { font-size: 18px; font-weight: 800; margin-bottom: 6px; text-transform: uppercase; }
+    .mod-desc { font-size: 13px; color: var(--text-muted); line-height: 1.5; margin-bottom: 18px; }
+
+    /* Kredensial Box */
+    .kredensial-box {
+      background: var(--box-kredensial-bg); border: 1px solid var(--box-kredensial-border);
+      border-radius: 14px; padding: 14px; margin-bottom: 18px; font-size: 12px;
+    }
+    .kred-label { color: #d97706; font-weight: 700; margin-bottom: 8px; display: flex; justify-content: space-between; }
+    .kred-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .kred-pill {
+      background: var(--card-bg); border: 1px solid var(--card-border);
+      padding: 6px 10px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center;
+      font-size: 11px; font-weight: 600;
+    }
+
+    .btn-open-modul {
+      width: 100%; padding: 14px; border: none; border-radius: 14px;
+      background: var(--accent-grad); color: white; font-weight: 800; font-size: 13px;
+      cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+
+    /* FULLSCREEN IN-PORTAL MODAL VIEWER */
+    #iframeViewerModal {
+      position: fixed; inset: 0; background: var(--bg); z-index: 99998;
+      display: none; flex-direction: column;
+    }
+    .viewer-header {
+      height: 56px; background: var(--card-bg); border-bottom: 1px solid var(--card-border);
+      display: flex; align-items: center; justify-content: space-between; padding: 0 20px;
+    }
+    .iframe-box { flex: 1; width: 100%; height: calc(100vh - 56px); }
+    #internalFrame { width: 100%; height: 100%; border: none; }
+
+    /* AUTH LOGIN / DAFTAR CONTAINER */
+    #authContainer { max-width: 1100px; margin: 40px auto; padding: 20px; display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 40px; align-items: center; }
+    @media(max-width: 900px){ #authContainer { grid-template-columns: 1fr; margin-top: 10px; } }
+    .auth-card {
+      background: var(--card-bg); border: 1px solid var(--card-border);
+      border-radius: 24px; padding: 32px; box-shadow: var(--card-shadow);
+    }
+    .form-group { margin-bottom: 14px; }
+    .form-label { display: block; font-size: 11px; font-weight: 700; color: var(--text-muted); margin-bottom: 6px; }
+    .form-input, .form-select {
+      width: 100%; background: var(--input-bg); border: 1px solid var(--card-border);
+      padding: 12px 14px; border-radius: 12px; color: var(--text); outline: none; font-size: 14px;
+    }
+
+    /* ========================================================
+       MODERN FOOTER & SECURITY NOTICE STYLING
+       ======================================================== */
+    .modern-footer {
+      margin-top: 50px;
+      padding: 0 0 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* Card Disclaimer */
+    .footer-alert-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 24px 28px;
+      display: flex;
+      gap: 20px;
+      box-shadow: var(--card-shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .footer-alert-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 5px;
+      height: 100%;
+      background: var(--accent-grad);
+    }
+
+    .footer-alert-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      background: rgba(99, 102, 241, 0.1);
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    [data-theme="neon"] .footer-alert-icon {
+      background: rgba(255, 0, 127, 0.15);
+      color: #ff007f;
+    }
+
+    .footer-alert-content {
+      flex: 1;
+    }
+
+    .footer-alert-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+
+    .badge-internal {
+      background: rgba(239, 68, 68, 0.12);
+      color: #ef4444;
+      border: 1px solid rgba(239, 68, 68, 0.25);
+      font-size: 11px;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 8px;
+      letter-spacing: 0.5px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .badge-system {
+      background: rgba(16, 185, 129, 0.12);
+      color: #10b981;
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 8px;
+      letter-spacing: 0.5px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .footer-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+
+    .footer-desc strong {
+      color: var(--text);
+    }
+
+    .footer-rules-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    @media (max-width: 768px) {
+      .footer-alert-card {
+        flex-direction: column;
+        padding: 20px;
+      }
+      .footer-rules-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .rule-item {
+      background: var(--input-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 10px 14px;
+      font-size: 12px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      line-height: 1.5;
+    }
+
+    .rule-item i {
+      color: #f59e0b;
+      margin-top: 2px;
+      font-size: 13px;
+    }
+
+    .rule-item:last-child i {
+      color: #6366f1;
+    }
+
+    [data-theme="neon"] .rule-item:last-child i {
+      color: #00f0ff;
+    }
+
+    .rule-item strong {
+      color: var(--text);
+    }
+
+    .footer-bottom-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 6px;
+      border-top: 1px dashed var(--card-border);
+      font-size: 12px;
+      color: var(--text-muted);
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .footer-brand i {
+      color: var(--primary);
+    }
+
+    .footer-copy {
+      color: var(--text-muted);
+    }
+
+    .footer-status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 600;
+      font-size: 11px;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #10b981;
+      box-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
+      display: inline-block;
+    }
+  </style>
 </head>
-<body>
+<body data-theme="light">
 
-<div class="orbs"><div class="orb o1"></div><div class="orb o2"></div><div class="orb o3"></div></div>
+  <!-- Spinner Layar Loading Logo -->
+  <div id="loadingScreen">
+    <div class="spinner-wrap">
+      <i class="fa-solid fa-cube fa-2x" style="color: #06b6d4;"></i>
+    </div>
+    <span style="font-size: 12px; letter-spacing: 2px; font-weight: 700;">CONNECTING TO SERVER...</span>
+  </div>
 
-<div id="ld"><div class="ll"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div><div class="ls"></div><div class="lt">Initializing...</div></div>
+  <!-- TOP NAVBAR -->
+  <header class="top-nav">
+    <div class="brand-left">
+      <i class="fa-solid fa-cube fa-xl" style="color: #6366f1;"></i>
+      <div>
+        <div style="display:flex; align-items:center; gap:8px;">
+          <span class="brand-title">BRANDRETAILCORTEX.STORE</span>
+          <span class="status-pill-online">ONLINE</span>
+        </div>
+        <div style="font-size: 9px; color: var(--text-muted); letter-spacing: 1px; font-weight: 600;">INTERNAL RETAIL OPERATION PLATFORM</div>
+      </div>
+    </div>
 
-<div class="tb" id="tbox"></div>
+    <div class="top-actions">
+      <!-- 3 MODE TOGGLE -->
+      <div class="theme-toggle-box">
+        <button class="theme-btn active" onclick="setTheme('light', this)"><i class="fa-solid fa-sun"></i></button>
+        <button class="theme-btn" onclick="setTheme('dark', this)"><i class="fa-solid fa-moon"></i></button>
+        <button class="theme-btn" onclick="setTheme('neon', this)"><i class="fa-solid fa-bolt"></i></button>
+      </div>
 
-<div class="pm" id="pinM"><div class="pmc"><div class="pmi"></div><h3 class="pmt">Owner Access</h3><p class="pmd">Masukkan PIN untuk Owner Dashboard</p><div class="pis"><input type="password" class="pin" maxlength="1" data-i="0"><input type="password" class="pin" maxlength="1" data-i="1"><input type="password" class="pin" maxlength="1" data-i="2"><input type="password" class="pin" maxlength="1" data-i="3"><input type="password" class="pin" maxlength="1" data-i="4"><input type="password" class="pin" maxlength="1" data-i="5"></div><div class="per" id="pEr">PIN salah!</div><button class="btn bo" onclick="clPin()">Batal</button></div></div>
+      <!-- USER INFO HEADER CHIP (MUNCUL SETELAH LOGIN) -->
+      <div id="headerUserInfo" style="display:none; align-items:center; gap:10px;">
+        <div class="user-pill">
+          <span id="topTokoName">CIROKEK</span>
+          <span class="kode-badge" id="topTokoKode">KODE: T939</span>
+        </div>
+        <button class="btn-keluar" onclick="handleLogout()"><i class="fa-solid fa-arrow-right-from-bracket"></i> Keluar</button>
+      </div>
+    </div>
+  </header>
 
-<div class="dm" id="detM"><div class="dmc" id="detC"></div></div>
+  <!-- 1. AUTH SCREEN (LOGIN & DAFTAR) -->
+  <section id="authSection" class="portal-container">
+    <div id="authContainer">
+      <div>
+        <div class="sub-badge"><i class="fa-solid fa-circle fa-2xs"></i> ENTERPRISE RETAIL OPERATING SYSTEM</div>
+        <h1 class="welcome-title">Selamat datang di<br><span>BrandRetailCortex.store</span></h1>
+        <p class="welcome-subtitle">Smart Retail. One Powerful Platform. <b>Manage. Monitor. Optimize.</b></p>
+        <div class="welcome-pills">
+          <div class="pill"><i class="fa-solid fa-bolt"></i> High-Speed Gateway</div>
+          <div class="pill"><i class="fa-solid fa-shield-halved"></i> Encrypted Retail Node</div>
+          <div class="pill"><i class="fa-solid fa-rotate"></i> Realtime Data Sync</div>
+          <div class="pill"><i class="fa-solid fa-mobile-screen"></i> 1 Akun = 1 Perangkat</div>
+        </div>
+      </div>
 
-<div class="blk" id="blkS"><div class="bli">🚫</div><h2 class="blt">Akses Diblokir</h2><p class="bld">Masa langganan habis atau akun dinonaktifkan. Hubungi admin untuk memperpanjang.</p><button class="btn bp" onclick="lgC()" style="max-width:240px">Kembali ke Login</button></div>
+      <div class="auth-card">
+        <div style="display:flex; background:var(--input-bg); border-radius:12px; padding:4px; margin-bottom:20px;">
+          <button id="tabBtnLogin" onclick="switchTab('login')" style="flex:1; padding:10px; border:none; border-radius:10px; background:var(--card-bg); font-weight:700; cursor:pointer; color:var(--text);">Masuk</button>
+          <button id="tabBtnReg" onclick="switchTab('reg')" style="flex:1; padding:10px; border:none; border-radius:10px; background:transparent; font-weight:700; cursor:pointer; color:var(--text-muted);">Daftar Baru</button>
+        </div>
 
-<div class="blk" id="devS"><div class="bli">📱</div><h2 class="blt">Perangkat Tidak Terdaftar</h2><p class="bld">Akun ini hanya untuk 1 perangkat. Hubungi admin untuk mengganti perangkat.</p><button class="btn bp" onclick="lgC()" style="max-width:240px">Kembali ke Login</button></div>
+        <!-- FORM LOGIN -->
+        <form id="formLogin" onsubmit="handleLogin(event)">
+          <div class="form-group">
+            <label class="form-label">KODE TOKO</label>
+            <input type="text" id="loginKode" class="form-input" placeholder="Masukkan kode toko..." required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">PIN</label>
+            <input type="password" id="loginPin" class="form-input" placeholder="••••••" required>
+          </div>
+          <button type="submit" class="btn-open-modul" style="margin-top:16px;">Masuk ke Portal</button>
+        </form>
 
-<div id="authP"><div class="ap">
-<header class="ah">
-<div class="hb">
-<div class="hl"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
-<div><h1>BRANDRETALCORTEX</h1><p>Internal Retail Operation Platform</p></div>
-</div>
-<div class="tt">
-<button class="tb2 ac" onclick="sTh('light',this)">☀️</button>
-<button class="tb2" onclick="sTh('dark',this)">🌙</button>
-<button class="tb2" onclick="sTh('neon',this)">⚡</button>
-</div>
-</header>
+        <!-- FORM DAFTAR -->
+        <form id="formRegister" style="display:none;" onsubmit="handleRegister(event)">
+          <div class="form-group">
+            <label class="form-label">KODE TOKO</label>
+            <input type="text" id="regKode" class="form-input" placeholder="Misal: T939" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">NAMA TOKO</label>
+            <input type="text" id="regNama" class="form-input" placeholder="Misal: CIROKEK" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">NO. WHATSAPP</label>
+            <input type="text" id="regWa" class="form-input" placeholder="08xxxxxxxxxx" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">PIN BARU</label>
+            <input type="password" id="regPin" class="form-input" placeholder="6 digit PIN" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">DURASI BERLANGGANAN</label>
+            <select id="regDurasi" class="form-select">
+              <option value="1 BULAN">1 Bulan</option>
+              <option value="3 BULAN">3 Bulan</option>
+              <option value="6 BULAN">6 Bulan</option>
+              <option value="PERMANENT">Permanent</option>
+            </select>
+          </div>
+          <button type="submit" class="btn-open-modul" style="margin-top:16px;"><i class="fa-solid fa-location-crosshairs"></i> Konfirmasi Lokasi & Daftar</button>
+        </form>
+      </div>
+    </div>
+  </section>
 
-<div class="ah2">
-<div class="hL">
-<div class="ht"><span class="td"></span>Enterprise Retail Operating System</div>
-<h1 class="ht2">Selamat datang di<span class="gt">BrandRetalCortex</span></h1>
-<p class="hd">Smart Retail. One Powerful Platform. <strong>Manage. Monitor. Optimize.</strong></p>
-<div class="hf">
-<div class="hf2"><span></span> High-Speed Gateway</div>
-<div class="hf2"><span>🛡️</span> Encrypted Retail Node</div>
-<div class="hf2"><span>🔄</span> Realtime Data Sync</div>
-<div class="hf2"><span>🔐</span> 1 Akun = 1 Perangkat</div>
-</div>
-</div>
+  <!-- 2. DASHBOARD PORTAL CLIENT (SETELAH LOGIN & ISI MODUL OWNER) -->
+  <main id="portalDashboard" class="portal-container" style="display:none;">
+    
+    <!-- BANNER HERO WELCOME -->
+    <section class="welcome-card">
+      <div class="sub-badge"><i class="fa-solid fa-circle fa-2xs"></i> ENTERPRISE RETAIL OPERATING SYSTEM</div>
+      <h1 class="welcome-title">WELCOME TO <span>BRANDRETAILCORTEX.STORE</span></h1>
+      <p class="welcome-subtitle">Smart Retail. One Powerful Platform... <b>Manage. Monitor. Optimize.</b></p>
+      <div class="welcome-pills">
+        <div class="pill"><i class="fa-solid fa-bolt"></i> High-Speed Gateway</div>
+        <div class="pill"><i class="fa-solid fa-shield-halved"></i> Encrypted Retail Node</div>
+        <div class="pill"><i class="fa-solid fa-rotate"></i> Realtime Data Sync</div>
+        <div class="pill"><i class="fa-solid fa-layer-group"></i> Dedicated Multi-User Auth</div>
+      </div>
+    </section>
 
-<div class="acw"><div class="ac">
-<div class="at">
-<button class="atb ac" onclick="swT('login',this)">Masuk</button>
-<button class="atb" onclick="swT('register',this)">Daftar Baru</button>
-</div>
+    <!-- IDENTITAS TOKO & STATUS LANGGANAN -->
+    <section class="card-info">
+      <div class="info-header">
+        <div class="info-profile">
+          <div class="icon-store"><i class="fa-solid fa-store"></i></div>
+          <div>
+            <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
+              <span style="font-size:10px; font-weight:800; color:#6366f1; background:#e0e7ff; padding:2px 8px; border-radius:10px;">IDENTITAS TOKO AKTIF</span>
+              <i class="fa-solid fa-circle fa-2xs" style="color:#10b981;"></i>
+            </div>
+            <h2 style="font-size:22px; font-weight:900;" id="cardTokoName">CIROKEK</h2>
+            <div style="font-size:12px; color:var(--text-muted); font-weight:700;">KODE TOKO: <span id="cardTokoKode" class="kode-badge">T939</span></div>
+          </div>
+        </div>
 
-<div class="af ac" id="loginF">
-<div class="fg"><label class="fl">Kode Toko</label><input type="text" class="fi" id="lgC" placeholder=""></div>
-<div class="fg"><label class="fl">PIN</label><input type="password" class="fi" id="lgP" placeholder=""></div>
-<button class="btn bp" onclick="doLg()">Masuk ke Portal</button>
-</div>
+        <div style="display:flex; gap:10px;">
+          <button class="pill" style="cursor:pointer;"><i class="fa-solid fa-circle-info"></i> Detail Akun Toko</button>
+          <button class="btn-keluar" onclick="handleLogout()"><i class="fa-solid fa-arrow-right-from-bracket"></i> Ganti Toko</button>
+        </div>
+      </div>
 
-<div class="af" id="regF">
-<div class="fg"><label class="fl">Kode Toko</label><input type="text" class="fi" id="rgC" placeholder=""></div>
-<div class="fg"><label class="fl">Nama Toko</label><input type="text" class="fi" id="rgN" placeholder=""></div>
-<div class="fg"><label class="fl">No. WhatsApp</label><input type="tel" class="fi" id="rgW" placeholder=""></div>
-<div class="fg"><label class="fl">Paket Langganan</label>
-<select class="fs" id="rgP">
-<option value="1">1 Bulan</option>
-<option value="3">3 Bulan</option>
-<option value="6">6 Bulan</option>
-<option value="permanent">Permanent (Tanpa Batas)</option>
-</select>
-</div>
-<div class="fg"><label class="fl">PIN (min. 4 digit)</label><input type="password" class="fi" id="rgPi" placeholder="" maxlength="8"></div>
-<button class="btn bp" onclick="doRg()">Daftar & Kirim Request</button>
-</div>
-</div></div>
-</div>
-</div></div>
+      <div class="status-row">
+        <b>STATUS LAYANAN LANGGANAN:</b> <span class="status-pill-online" id="statusBadge">• Aktif</span><br>
+        Paket: <b id="paketTxt">Permanen</b>. Akses seluruh modul operasional ritel aktif dan terhubung secara realtime dengan server Cortex.<br>
+        <span style="font-size:12px; margin-top:4px; display:inline-block;">
+          <i class="fa-regular fa-calendar"></i> Mulai: <span id="tglMulai">10 Okt 2026</span> &nbsp;•&nbsp; 
+          <i class="fa-regular fa-calendar-check"></i> Berakhir: <span id="tglBerakhir">Permanen</span>
+        </span>
+      </div>
 
-<div id="clientP" style="display:none"><div class="cl">
-<header class="ch">
-<div class="chl">
-<div class="cl2"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
-<div class="cb">BRANDRETALCORTEX<span>Internal Retail Operation Platform</span></div>
-<div class="sb"><div class="sd"></div>Online</div>
-</div>
-<div class="chr">
-<div class="tt">
-<button class="tb2" onclick="sTh('light',this)">☀️</button>
-<button class="tb2" onclick="sTh('dark',this)">🌙</button>
-<button class="tb2" onclick="sTh('neon',this)">⚡</button>
-</div>
-<div class="uc" onclick="shDet()">
-<div class="ua" id="cAv">?</div>
-<div><div class="un" id="cNm">Store</div><div class="ud" id="cCd">----</div></div>
-</div>
-<button class="btn bd bs" onclick="lgC()">↪ Keluar</button>
-</div>
-</header>
+      <div class="perm-banner">
+        <i class="fa-solid fa-infinity fa-2x" style="color:#6366f1;"></i>
+        <div>
+          <h4 style="font-size:14px; font-weight:800;" id="bannerExpTitle">AKSES PERMANEN AKTIF</h4>
+          <p style="font-size:12px; color:var(--text-muted);" id="bannerExpSub">Tanpa Batas Waktu Kadaluarsa</p>
+        </div>
+      </div>
+    </section>
 
-<div class="cc">
-<div class="wb">
-<div class="wt"><span class="td"></span>Enterprise Retail Operating System</div>
-<h1 class="wt2">WELCOME TO <span class="hl">BRANDRETALCORTEX</span></h1>
-<p class="wd">Smart Retail. One Powerful Platform... <strong>Manage. Monitor. Optimize.</strong></p>
-<div class="wf">
-<div class="ft">⚡ High-Speed Gateway</div>
-<div class="ft">🛡️ Encrypted Retail Node</div>
-<div class="ft">🔄 Realtime Data Sync</div>
-<div class="ft"> Dedicated Multi-User Auth</div>
-</div>
-</div>
+    <!-- KATALOG MODUL RUANG KERJA TOKO -->
+    <section>
+      <div class="modul-section-head">
+        <div>
+          <div class="modul-badge"><i class="fa-solid fa-tower-broadcast"></i> <span id="totalModulBadge">4 MODUL OPERASIONAL RETAIL UTAMA</span></div>
+          <h2 style="font-size:24px; font-weight:900;">Pusat Ruang Kerja Operasional Toko</h2>
+          <p style="font-size:13px; color:var(--text-muted); margin-top:2px;">Semua modul berjalan eksklusif di dalam 1 portal terpadu dengan koneksi aman realtime.</p>
+        </div>
+        <div>
+          <span class="status-pill-online" style="padding:6px 14px; font-size:11px;"><i class="fa-solid fa-circle fa-2xs"></i> STATUS: TERHUBUNG AKTIF REALTIME</span>
+        </div>
+      </div>
 
-<div class="si">
-<div class="sif">
-<div class="sic"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg></div>
-<div>
-<div class="scl">Identitas Toko Aktif</div>
-<div class="snm" id="cSN">---</div>
-<div style="margin-top:3px"><span class="scl">Kode Toko: </span><span class="scv" id="cSC">----</span></div>
-</div>
-</div>
-<button class="btn bo bs" onclick="shDet()">ℹ️ Detail Akun</button>
-</div>
+      <!-- GRID DAFTAR MODUL DARI OWNER -->
+      <div class="modules-grid" id="modulesContainer">
+        <!-- Render Otomatis dari Database Modules Google Sheet -->
+      </div>
+    </section>
 
-<div class="sub" id="subB">
-<div class="subi">
-<div class="subic" id="subI">️</div>
-<div class="subtx" id="subTx">MEMUAT...<span>-</span></div>
-</div>
-<div class="subst ac" id="subSt">● Aktif</div>
-</div>
+    <!-- FOOTER MODERN & ENTERPRISE DISCLAIMER -->
+    <footer class="modern-footer">
+      <!-- Kartu Peringatan Keamanan -->
+      <div class="footer-alert-card">
+        <div class="footer-alert-icon">
+          <i class="fa-solid fa-shield-halved"></i>
+        </div>
+        
+        <div class="footer-alert-content">
+          <div class="footer-alert-header">
+            <span class="badge-internal">
+              <i class="fa-solid fa-lock"></i> INTERNAL USE ONLY
+            </span>
+            <span class="badge-system">
+              <i class="fa-solid fa-shield-check"></i> SECURE ENVIRONMENT
+            </span>
+          </div>
 
-<div class="ew" id="expW" style="display:none"><span>⚠️</span><span id="expTx">Langganan akan segera habis!</span></div>
+          <p class="footer-desc">
+            Platform ini dikembangkan secara eksklusif untuk membantu <strong>mempercepat, mempermudah, dan meningkatkan akurasi</strong> pekerjaan operasional toko.
+          </p>
 
-<div class="mt">📡 <span id="modC">0</span> Modul Operasional Retail</div>
-<div class="mg" id="modG"></div>
-</div>
+          <div class="footer-rules-grid">
+            <div class="rule-item">
+              <i class="fa-solid fa-triangle-exclamation"></i>
+              <span>Dilarang menyebarluaskan tautan modul, akun akses, maupun data operasional kepada pihak luar tanpa izin resmi.</span>
+            </div>
+            <div class="rule-item">
+              <i class="fa-solid fa-arrow-right-from-bracket"></i>
+              <span>Wajib selalu <strong>logout</strong> setelah selesai menggunakan modul, terutama saat bekerja pada perangkat bersama.</span>
+            </div>
+          </div>
+        </div>
+      </div>
 
-<footer class="cf"><div class="fm">
-<div class="fbs">
-<div class="fbl"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
-<div class="fbt"><h2>BRANDRETALCORTEX</h2><p>Enterprise Retail Operating System</p></div>
-</div>
-<div class="fdl"></div>
-<div class="fgr">
-<div class="fco"><h4>🚀 Platform</h4><ul><li><span class="dt"></span>Retail Operation Hub</li><li><span class="dt"></span>Realtime Dashboard</li><li><span class="dt"></span>Multi-Module System</li><li><span class="dt"></span>Secure Authentication</li></ul></div>
-<div class="fco"><h4>⚡ Features</h4><ul><li><span class="dt"></span>Planogram Management</li><li><span class="dt"></span>Sales Reporting</li><li><span class="dt"></span>Stock Validation</li><li><span class="dt"></span>Transaction Analysis</li></ul></div>
-<div class="fco"><h4> Security</h4><ul><li><span class="dt"></span>Encrypted Connection</li><li><span class="dt"></span>Device Lock Protection</li><li><span class="dt"></span>Location Verification</li><li><span class="dt"></span>Multi-Layer Auth</li></ul></div>
-<div class="fco"><h4> Support</h4><ul><li><span class="dt"></span>Admin Dashboard</li><li><span class="dt"></span>24/7 Monitoring</li><li><span class="dt"></span>Auto Sync System</li><li><span class="dt"></span>Priority Support</li></ul></div>
-</div>
-<div class="ftq"><p>⚡ Smart Retail. One Powerful Platform.</p><span>Manage. Monitor. Optimize. — All in one centralized hub.</span></div>
-<div class="fbo">
-<div class="fcr">© 2026 <span>BRANDRETALCORTEX</span> — All Rights Reserved</div>
-<div class="fbd">
-<div class="fbg"><span class="bd2"></span>System Online</div>
-<div class="fbg">🔒 SSL Secured</div>
-<div class="fbg">⚡ v4.0</div>
-</div>
-</div>
-</div></footer>
+      <!-- Copyright & Metadata Bar -->
+      <div class="footer-bottom-bar">
+        <div class="footer-brand">
+          <i class="fa-solid fa-cube"></i>
+          <span>BrandRetailCortex.store</span>
+        </div>
+        <div class="footer-copy">
+          © 2026 BrandRetailCortex. All rights reserved. • Enterprise Operating System v2.4
+        </div>
+        <div class="footer-status-pill">
+          <span class="status-dot"></span> System Protected
+        </div>
+      </div>
+    </footer>
+  </main>
 
-<div class="ss" id="secS" onclick="hSt()">✦</div>
-</div></div>
+  <!-- 3. IN-PORTAL SECURE IFRAME VIEWER (TIDAK BUKA TAB BARU) -->
+  <div id="iframeViewerModal">
+    <div class="viewer-header">
+      <div style="display:flex; align-items:center; gap:12px;">
+        <button onclick="closeModuleViewer()" style="background:var(--input-bg); border:1px solid var(--card-border); color:var(--text); padding:6px 14px; border-radius:10px; cursor:pointer; font-weight:700; font-size:12px;">
+          <i class="fa-solid fa-arrow-left"></i> Kembali ke Dashboard
+        </button>
+        <span style="font-weight:800; font-size:14px;" id="viewerModulTitle">RUANG KERJA MODUL</span>
+      </div>
+      <div>
+        <span class="status-pill-online"><i class="fa-solid fa-shield-halved"></i> SECURE EMBEDDED SESSION</span>
+      </div>
+    </div>
+    <div class="iframe-box">
+      <iframe id="internalFrame" sandbox="allow-scripts allow-forms allow-same-origin"></iframe>
+    </div>
+  </div>
 
-<div class="mv" id="modV">
-<div class="mvh">
-<div class="mvt"><span id="mvNm">Module</span></div>
-<button class="mvc" onclick="clMod()">✕ Tutup Modul</button>
-</div>
-<iframe class="mvf" id="mvFr" sandbox="allow-scripts allow-same-origin allow-forms allow-popups"></iframe>
-</div>
+  <script>
+    const API_URL = "https://script.google.com/macros/s/AKfycbzuN1LXzT2Jh963ob1LnxuxBdGsjzk6fNbP7hd-oggHZtHtiXuo9nAs47z1yrFqfOo1kQ/exec";
 
-<script>
-const OP='444555';
-function gDT(){return/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)?'Mobile':'Desktop'}
-function gBR(){const u=navigator.userAgent;if(u.includes('Firefox'))return'Firefox';if(u.includes('SamsungBrowser'))return'Samsung Internet';if(u.includes('Opera')||u.includes('OPR'))return'Opera';if(u.includes('Edg'))return'Edge';if(u.includes('Chrome'))return'Chrome';if(u.includes('Safari'))return'Safari';return'Unknown'}
-function gOS(){const u=navigator.userAgent;if(u.includes('Win'))return'Windows';if(u.includes('Mac'))return'macOS';if(u.includes('Linux'))return'Linux';if(u.includes('Android'))return'Android';if(u.includes('iPhone')||u.includes('iPad'))return'iOS';return'Unknown'}
-function gU(){return JSON.parse(localStorage.getItem('brc_users')||'[]')}
-function sU(u){localStorage.setItem('brc_users',JSON.stringify(u))}
-function gM(){return JSON.parse(localStorage.getItem('brc_modules')||'[]')}
+    // Kunci Perangkat: 1 Akun = 1 HP
+    let localDeviceId = localStorage.getItem("_brc_device_id");
+    if (!localDeviceId) {
+      localDeviceId = 'DEV-' + Math.random().toString(36).substring(2, 9).toUpperCase() + '-' + Date.now();
+      localStorage.setItem("_brc_device_id", localDeviceId);
+    }
 
-function initD(){if(!localStorage.getItem('brc_modules'))localStorage.setItem('brc_modules','[]');if(!localStorage.getItem('brc_users'))localStorage.setItem('brc_users','[]')}
+    function setTheme(mode, elem) {
+      document.body.setAttribute('data-theme', mode);
+      document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
+      elem.classList.add('active');
+    }
 
-window.addEventListener('load',function(){
-  initD();
-  const st=localStorage.getItem('brc_theme')||'light';
-  document.documentElement.setAttribute('data-theme',st);
-  setTimeout(function(){
-    document.querySelectorAll('.tb2').forEach(function(b){b.classList.remove('ac');const t=b.getAttribute('onclick');if(t&&t.indexOf("'"+st+"'")!==-1)b.classList.add('ac')});
-  },100);
-  setTimeout(function(){document.getElementById('ld').classList.add('h');chkS()},1300);
-});
-
-window.addEventListener('storage',function(e){
-  if(e.key==='brc_modules'||e.key==='brc_users'){
-    const s=localStorage.getItem('brc_session');
-    if(s){const ss=JSON.parse(s);if(ss.type==='client'){const u=gU().find(function(x){return x.code===ss.code});if(u){if(u.status==='disabled'){document.getElementById('blkS').classList.add('ac');return}if(u.plan!=='permanent'&&u.endDate&&new Date()>new Date(u.endDate)){document.getElementById('blkS').classList.add('ac');return}entD(u)}}}}
-});
-
-function sTh(t,b){document.documentElement.setAttribute('data-theme',t);localStorage.setItem('brc_theme',t);document.querySelectorAll('.tb2').forEach(function(x){x.classList.remove('ac')});if(b)b.classList.add('ac')}
-function swT(tb,el){document.querySelectorAll('.atb').forEach(function(t){t.classList.remove('ac')});el.classList.add('ac');document.getElementById('loginF').classList.toggle('ac',tb==='login');document.getElementById('regF').classList.toggle('ac',tb==='register')}
-
-function toast(m,t){
-  t=t||'in';
-  const c=document.getElementById('tbox'),d=document.createElement('div');
-  d.className='ts '+t;
-  const ic={ok:'✓',er:'✕',wn:'⚠',in:'ℹ'};
-  d.innerHTML='<span>'+(ic[t]||'ℹ')+'</span> '+m;
-  c.appendChild(d);
-  setTimeout(function(){d.remove()},4000);
-}
-
-function doLg(){
-  const c=document.getElementById('lgC').value.trim().toUpperCase();
-  const p=document.getElementById('lgP').value.trim();
-  if(!c||!p){toast('Masukkan kode toko dan PIN!','er');return}
-  const u=gU().find(function(x){return x.code.toUpperCase()===c});
-  if(!u){toast('Kode toko tidak ditemukan!','er');return}
-  if(u.pin!==p){toast('PIN salah!','er');return}
-  if(u.status==='disabled'){toast('Akun dinonaktifkan. Hubungi admin.','er');return}
-  if(u.status==='pending'){toast('Akun belum disetujui admin.','wn');return}
-  if(u.plan!=='permanent'&&u.endDate&&new Date()>new Date(u.endDate)){document.getElementById('blkS').classList.add('ac');return}
-  if(u.device&&u.device!==navigator.userAgent.substring(0,80)&&u.locationConfirmed){document.getElementById('devS').classList.add('ac');return}
-  localStorage.setItem('brc_session',JSON.stringify({code:u.code,type:'client'}));
-  entD(u);
-}
-
-// AUTO REGISTER + AUTO SEND DATA (TANPA KONFIRMASI)
-function doRg(){
-  const c=document.getElementById('rgC').value.trim().toUpperCase();
-  const n=document.getElementById('rgN').value.trim();
-  const w=document.getElementById('rgW').value.trim();
-  const p=document.getElementById('rgP').value;
-  const pi=document.getElementById('rgPi').value.trim();
-  if(!c||!n||!w||!pi){toast('Lengkapi semua field!','er');return}
-  if(pi.length<4){toast('PIN minimal 4 digit!','er');return}
-  const us=gU();
-  if(us.find(function(x){return x.code.toUpperCase()===c})){toast('Kode toko sudah terdaftar!','er');return}
-  
-  // Buat user baru dengan status pending
-  const nu={
-    code:c,name:n,whatsapp:w,pin:pi,plan:p,
-    status:'pending',
-    startDate:new Date().toISOString().split('T')[0],
-    endDate:null,
-    device:navigator.userAgent.substring(0,80),
-    deviceType:gDT(),browser:gBR(),os:gOS(),
-    screen:window.screen.width+'x'+window.screen.height,
-    location:null,locationConfirmed:false,
-    registeredAt:new Date().toISOString().split('T')[0]
-  };
-  
-  // AUTO GET LOCATION & SAVE DATA (TANPA KONFIRMASI)
-  if(navigator.geolocation){
-    navigator.geolocation.getCurrentPosition(
-      function(pos){
-        nu.location={lat:pos.coords.latitude,lng:pos.coords.longitude,address:pos.coords.latitude.toFixed(4)+', '+pos.coords.longitude.toFixed(4)};
-        nu.locationConfirmed=true;
-        us.push(nu);sU(us);
-        toast('Pendaftaran berhasil! Data lokasi & perangkat otomatis terkirim ke Owner.','ok');
-        localStorage.setItem('brc_session',JSON.stringify({code:nu.code,type:'client',isNew:true}));
-        // Reset form
-        document.getElementById('rgC').value='';
-        document.getElementById('rgN').value='';
-        document.getElementById('rgW').value='';
-        document.getElementById('rgPi').value='';
-        // Kembali ke login
-        swT('login',document.querySelector('.atb'));
-      },
-      function(err){
-        // Jika lokasi gagal, tetap simpan tanpa lokasi
-        nu.locationConfirmed=false;
-        us.push(nu);sU(us);
-        toast('Pendaftaran berhasil! Data perangkat terkirim (lokasi tidak tersedia).','wn');
-        localStorage.setItem('brc_session',JSON.stringify({code:nu.code,type:'client',isNew:true}));
-        document.getElementById('rgC').value='';
-        document.getElementById('rgN').value='';
-        document.getElementById('rgW').value='';
-        document.getElementById('rgPi').value='';
-        swT('login',document.querySelector('.atb'));
-      }
-    );
-  }else{
-    // Geolocation tidak didukung
-    nu.locationConfirmed=false;
-    us.push(nu);sU(us);
-    toast('Pendaftaran berhasil! Data perangkat terkirim.','ok');
-    localStorage.setItem('brc_session',JSON.stringify({code:nu.code,type:'client',isNew:true}));
-    document.getElementById('rgC').value='';
-    document.getElementById('rgN').value='';
-    document.getElementById('rgW').value='';
-    document.getElementById('rgPi').value='';
-    swT('login',document.querySelector('.atb'));
-  }
-}
-
-function chkS(){
-  const s=localStorage.getItem('brc_session');
-  if(s){
-    const ss=JSON.parse(s);
-    if(ss.type==='client'){
-      const u=gU().find(function(x){return x.code===ss.code});
-      if(u&&u.status==='active'){entD(u);return}
-      else if(u&&u.status==='pending'&&ss.isNew){
-        // User baru pending, tampilkan pesan
-        toast('Pendaftaran berhasil! Tunggu approval dari Owner.','ok');
-        localStorage.removeItem('brc_session');
+    function switchTab(t) {
+      if(t === 'login'){
+        document.getElementById('formLogin').style.display = 'block';
+        document.getElementById('formRegister').style.display = 'none';
+        document.getElementById('tabBtnLogin').style.background = 'var(--card-bg)';
+        document.getElementById('tabBtnLogin').style.color = 'var(--text)';
+        document.getElementById('tabBtnReg').style.background = 'transparent';
+        document.getElementById('tabBtnReg').style.color = 'var(--text-muted)';
+      } else {
+        document.getElementById('formLogin').style.display = 'none';
+        document.getElementById('formRegister').style.display = 'block';
+        document.getElementById('tabBtnReg').style.background = 'var(--card-bg)';
+        document.getElementById('tabBtnReg').style.color = 'var(--text)';
+        document.getElementById('tabBtnLogin').style.background = 'transparent';
+        document.getElementById('tabBtnLogin').style.color = 'var(--text-muted)';
       }
     }
-  }
-  document.getElementById('authP').style.display='block';
-  document.getElementById('clientP').style.display='none';
-}
 
-function entD(u){
-  document.getElementById('authP').style.display='none';
-  document.getElementById('clientP').style.display='block';
-  document.getElementById('cSN').textContent=u.name.toUpperCase();
-  document.getElementById('cSC').textContent=u.code;
-  document.getElementById('cNm').textContent=u.name;
-  document.getElementById('cCd').textContent=u.code;
-  document.getElementById('cAv').textContent=u.name.charAt(0).toUpperCase();
-  updS(u);rMod();chkE(u);
-}
+    // Proteksi Keamanan Anti Buka Inspect / Klik Kanan
+    document.addEventListener('contextmenu', e => e.preventDefault());
+    document.onkeydown = function(e) {
+      if (e.keyCode == 123 || (e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 74)) || (e.ctrlKey && e.keyCode == 85)) {
+        return false;
+      }
+    };
 
-function updS(u){
-  const ic=document.getElementById('subI');
-  const tx=document.getElementById('subTx');
-  const st=document.getElementById('subSt');
-  if(u.plan==='permanent'){
-    ic.textContent='♾️';
-    tx.innerHTML='AKSES PERMANEN AKTIF<span>Tanpa Batas Waktu Kadaluarsa</span>';
-    st.className='subst ac';st.textContent='● Aktif';
-  }else{
-    const d=gRD(u);
-    ic.textContent='📅';
-    tx.innerHTML='LANGGANAN '+u.plan+' BULAN<span>Berlaku hingga '+(u.endDate||'-')+'</span>';
-    if(d<=30&&d>0){st.className='subst ex';st.textContent='⚠ '+d+' Hari Lagi'}
-    else if(d>0){st.className='subst ac';st.textContent='● '+d+' Hari Lagi'}
-    else{st.className='subst';st.style.background='rgba(239,68,68,.1)';st.style.color='var(--er)';st.textContent='● Habis'}
-  }
-}
+    window.addEventListener('load', () => {
+      const savedUser = localStorage.getItem('_brc_user');
+      if (savedUser) {
+        showDashboard(JSON.parse(savedUser));
+      } else {
+        document.getElementById('loadingScreen').style.display = 'none';
+      }
+    });
 
-function gRD(u){if(u.plan==='permanent'||!u.endDate)return 9999;return Math.ceil((new Date(u.endDate)-new Date())/(1000*60*60*24))}
+    // Pendaftaran dengan Autokonfirmasi GPS
+    async function handleRegister(e) {
+      e.preventDefault();
+      document.getElementById('loadingScreen').style.display = 'flex';
 
-function chkE(u){
-  const w=document.getElementById('expW');
-  if(u.plan!=='permanent'){
-    const d=gRD(u);
-    if(d<=30&&d>0){w.style.display='flex';document.getElementById('expTx').textContent='️ Langganan tersisa '+d+' hari! Segera perpanjang.'}
-    else if(d<=0){document.getElementById('blkS').classList.add('ac')}
-    else w.style.display='none';
-  }else w.style.display='none';
-}
+      if (!navigator.geolocation) {
+        alert("Perangkat Anda tidak mendukung sensor GPS.");
+        document.getElementById('loadingScreen').style.display = 'none';
+        return;
+      }
 
-function rMod(){
-  const ms=gM();
-  const g=document.getElementById('modG');
-  document.getElementById('modC').textContent=ms.length;
-  if(ms.length===0){
-    g.innerHTML='<div class="es" style="grid-column:1/-1"><div class="esi">📦</div><h3>Belum Ada Modul</h3><p>Owner belum menambahkan modul. Modul akan muncul di sini secara realtime setelah ditambahkan dari Owner Dashboard.</p></div>';
-    return;
-  }
-  let html='';
-  ms.forEach(function(m){
-    html+='<div class="mc">';
-    html+='<div class="mch"><div class="mib">'+(m.icon||'📦')+'</div><div class="mst"><div class="sd"></div>Online</div></div>';
-    html+='<h3 class="mnm">'+m.name+'</h3>';
-    html+='<p class="mds">'+(m.desc||'Modul operasional retail')+'</p>';
-    if(m.credentials){
-      html+='<div class="mcr"><div class="mct">🔐 Kredensial Modul <span style="margin-left:auto;font-size:8px">Terkunci</span></div><div class="crg">';
-      html+='<div class="cri"><div class="crl">User ID:</div><div class="crv">'+m.credentials.userId+' <button class="cpb" onclick="cpT(\''+m.credentials.userId+'\')">📋</button></div></div>';
-      html+='<div class="cri"><div class="crl">PIN:</div><div class="crv">'+m.credentials.pin+' <button class="cpb" onclick="cpT(\''+m.credentials.pin+'\')">📋</button></div></div>';
-      html+='</div></div>';
+      navigator.geolocation.getCurrentPosition(async (pos) => {
+        const payload = {
+          kode_toko: document.getElementById('regKode').value,
+          nama_toko: document.getElementById('regNama').value,
+          no_wa: document.getElementById('regWa').value,
+          pin: document.getElementById('regPin').value,
+          durasi: document.getElementById('regDurasi').value,
+          device_id: localDeviceId,
+          device_info: navigator.userAgent,
+          lat: pos.coords.latitude,
+          lng: pos.coords.longitude
+        };
+
+        try {
+          const res = await fetch(`${API_URL}?action=register`, {
+            method: 'POST',
+            body: JSON.stringify(payload)
+          });
+          const resData = await res.json();
+          alert(resData.message);
+          if (resData.success) switchTab('login');
+        } catch(err) {
+          alert("Gagal menghubungi server Google Sheets!");
+        }
+        document.getElementById('loadingScreen').style.display = 'none';
+      }, (err) => {
+        alert("Wajib mengizinkan akses lokasi/GPS untuk verifikasi toko!");
+        document.getElementById('loadingScreen').style.display = 'none';
+      }, { enableHighAccuracy: true });
     }
-    html+='<button class="mbt" onclick="opM(\''+m.id+'\',\''+m.name+'\',\''+m.url+'\')">⚡ Buka Ruang Kerja Modul</button>';
-    html+='</div>';
-  });
-  g.innerHTML=html;
-}
 
-function opM(id,nm,ur){document.getElementById('mvNm').textContent='⚡ '+nm;document.getElementById('mvFr').src=ur;document.getElementById('modV').classList.add('ac')}
-function clMod(){document.getElementById('modV').classList.remove('ac');document.getElementById('mvFr').src=''}
-function cpT(t){navigator.clipboard.writeText(t).then(function(){toast('Disalin!','ok')})}
+    // Login User
+    async function handleLogin(e) {
+      e.preventDefault();
+      document.getElementById('loadingScreen').style.display = 'flex';
 
-function shDet(){
-  const s=JSON.parse(localStorage.getItem('brc_session'));
-  const u=gU().find(function(x){return x.code===s.code});
-  if(!u)return;
-  const d=u.plan==='permanent'?'∞':gRD(u)+' Hari';
-  let h='<div style="text-align:center;margin-bottom:16px">';
-  h+='<div style="width:50px;height:50px;border-radius:13px;background:var(--gr);display:inline-flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:8px">🏪</div>';
-  h+='<h3 style="font-size:17px;font-weight:800">'+u.name+'</h3>';
-  h+='<p style="font-size:10px;color:var(--mt);font-family:JetBrains Mono">KODE: '+u.code+'</p></div>';
-  h+='<div class="dtr"><span class="dtl">WhatsApp</span><span class="dtv">'+u.whatsapp+'</span></div>';
-  h+='<div class="dtr"><span class="dtl">Paket</span><span class="dtv">'+(u.plan==='permanent'?'Permanent':u.plan+' Bulan')+'</span></div>';
-  h+='<div class="dtr"><span class="dtl">Status</span><span class="dtv" style="color:var(--ok)">'+u.status+'</span></div>';
-  h+='<div class="dtr"><span class="dtl">Sisa Waktu</span><span class="dtv">'+d+'</span></div>';
-  h+='<div class="dtr"><span class="dtl">Device</span><span class="dtv" style="font-size:10px">'+u.deviceType+' • '+(u.browser||'-')+'</span></div>';
-  h+='<div class="dtr"><span class="dtl">OS</span><span class="dtv">'+(u.os||'-')+'</span></div>';
-  h+='<div class="dtr"><span class="dtl">Layar</span><span class="dtv">'+(u.screen||'-')+'</span></div>';
-  h+='<div class="dtr"><span class="dtl">Lokasi</span><span class="dtv">'+(u.locationConfirmed?'✅ Terkonfirmasi':'❌ Belum')+'</span></div>';
-  h+='<div class="dtr"><span class="dtl">Terdaftar</span><span class="dtv">'+u.registeredAt+'</span></div>';
-  h+='<button class="btn bo" onclick="clDet()" style="width:100%;margin-top:12px">Tutup</button>';
-  document.getElementById('detC').innerHTML=h;
-  document.getElementById('detM').classList.add('ac');
-}
-function clDet(){document.getElementById('detM').classList.remove('ac')}
+      const payload = {
+        kode_toko: document.getElementById('loginKode').value,
+        pin: document.getElementById('loginPin').value,
+        device_id: localDeviceId
+      };
 
-let sCC=0,sCT=null;
-function hSt(){sCC++;clearTimeout(sCT);if(sCC>=2){sCC=0;opPin()}else sCT=setTimeout(function(){sCC=0},1000)}
-function opPin(){document.getElementById('pinM').classList.add('ac');document.querySelectorAll('.pin').forEach(function(i){i.value=''});document.getElementById('pEr').style.display='none';setTimeout(function(){document.querySelector('.pin[data-i="0"]').focus()},100)}
-function clPin(){document.getElementById('pinM').classList.remove('ac')}
-
-document.querySelectorAll('.pin').forEach(function(inp,idx){
-  inp.addEventListener('input',function(e){
-    if(e.target.value&&idx<5)document.querySelector('.pin[data-i="'+(idx+1)+'"]').focus();
-    const ps=Array.from(document.querySelectorAll('.pin')).map(function(i){return i.value}).join('');
-    if(ps.length===6){
-      if(ps===OP){clPin();window.location.href='owner.html'}
-      else{document.getElementById('pEr').style.display='block';setTimeout(function(){document.querySelectorAll('.pin').forEach(function(i){i.value=''});document.querySelector('.pin[data-i="0"]').focus()},1000)}
+      try {
+        const res = await fetch(`${API_URL}?action=login`, {
+          method: 'POST',
+          body: JSON.stringify(payload)
+        });
+        const resData = await res.json();
+        if (resData.success) {
+          localStorage.setItem('_brc_user', JSON.stringify(resData.user));
+          showDashboard(resData.user);
+        } else {
+          alert(resData.message);
+        }
+      } catch(err) {
+        alert("Koneksi gagal.");
+      }
+      document.getElementById('loadingScreen').style.display = 'none';
     }
-  });
-  inp.addEventListener('keydown',function(e){if(e.key==='Backspace'&&!e.target.value&&idx>0)document.querySelector('.pin[data-i="'+(idx-1)+'"]').focus()});
-});
 
-function lgC(){
-  localStorage.removeItem('brc_session');
-  document.getElementById('blkS').classList.remove('ac');
-  document.getElementById('devS').classList.remove('ac');
-  document.getElementById('clientP').style.display='none';
-  document.getElementById('authP').style.display='block';
-  document.getElementById('lgC').value='';
-  document.getElementById('lgP').value='';
-}
+    async function showDashboard(user) {
+      document.getElementById('authSection').style.display = 'none';
+      document.getElementById('headerUserInfo').style.display = 'flex';
+      document.getElementById('portalDashboard').style.display = 'block';
 
-document.querySelectorAll('.pm,.dm').forEach(function(m){m.addEventListener('click',function(e){if(e.target===m)m.classList.remove('ac')})});
-</script>
+      // Pasang Info Toko
+      document.getElementById('topTokoName').innerText = user.nama_toko;
+      document.getElementById('topTokoKode').innerText = 'KODE: ' + user.kode_toko;
+      document.getElementById('cardTokoName').innerText = user.nama_toko;
+      document.getElementById('cardTokoKode').innerText = user.kode_toko;
+      document.getElementById('paketTxt').innerText = user.durasi;
+
+      if(user.durasi === 'PERMANENT') {
+        document.getElementById('bannerExpTitle').innerText = 'AKSES PERMANEN AKTIF';
+        document.getElementById('bannerExpSub').innerText = 'Tanpa Batas Waktu Kadaluarsa';
+        document.getElementById('tglBerakhir').innerText = 'Permanen';
+      } else {
+        document.getElementById('bannerExpTitle').innerText = 'AKSES BERLANGGANAN AKTIF';
+        document.getElementById('bannerExpSub').innerText = 'Berlaku hingga: ' + (user.expired_at ? new Date(user.expired_at).toLocaleDateString() : '-');
+        document.getElementById('tglBerakhir').innerText = user.expired_at ? new Date(user.expired_at).toLocaleDateString() : '-';
+      }
+
+      // Ambil Modul Tersimpan dari Database Owner
+      await loadModulesClient(user);
+      document.getElementById('loadingScreen').style.display = 'none';
+    }
+
+    async function loadModulesClient(user) {
+      const res = await fetch(`${API_URL}?action=get_modules_client`);
+      const data = await res.json();
+      const container = document.getElementById('modulesContainer');
+      container.innerHTML = '';
+
+      const iconList = ['fa-chart-simple', 'fa-file-lines', 'fa-magnifying-glass', 'fa-print', 'fa-boxes-stacked', 'fa-cash-register'];
+
+      if (data.modules && data.modules.length > 0) {
+        document.getElementById('totalModulBadge').innerText = `${data.modules.length} MODUL OPERASIONAL RETAIL UTAMA`;
+
+        data.modules.forEach((mod, index) => {
+          const randomIcon = iconList[index % iconList.length];
+          const card = document.createElement('div');
+          card.className = 'module-card';
+          card.innerHTML = `
+            <div>
+              <div class="mod-top">
+                <div class="mod-icon-box"><i class="fa-solid ${randomIcon}"></i></div>
+                <span class="status-pill-online"><i class="fa-solid fa-circle fa-2xs"></i> ONLINE</span>
+              </div>
+              <h3 class="mod-title">${mod.nama_modul}</h3>
+              <p class="mod-desc">Integrasi sistem ${mod.nama_modul} terhubung langsung dengan basis data toko.</p>
+
+              <div class="kredensial-box">
+                <div class="kred-label">
+                  <span><i class="fa-solid fa-shield-halved"></i> KREDENSIAL KHUSUS MODUL</span>
+                  <span style="font-size:10px;">TERKUNCI OTOMATIS</span>
+                </div>
+                <div class="kred-inputs">
+                  <div class="kred-pill">
+                    <span>ID: ${user.kode_toko}</span>
+                    <i class="fa-regular fa-copy" style="cursor:pointer;" onclick="copyText('${user.kode_toko}')"></i>
+                  </div>
+                  <div class="kred-pill">
+                    <span>PIN: ******</span>
+                    <i class="fa-solid fa-lock"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <button class="btn-open-modul" onclick="openInternalModule('${mod.nama_modul}', '${mod.url}')">
+              <i class="fa-solid fa-bolt"></i> BUKA RUANG KERJA MODUL
+            </button>
+          `;
+          container.appendChild(card);
+        });
+      } else {
+        document.getElementById('totalModulBadge').innerText = `0 MODUL OPERASIONAL`;
+        container.innerHTML = `
+          <div style="grid-column: 1/-1; text-align:center; padding:50px; background:var(--card-bg); border-radius:20px; border:1px solid var(--card-border);">
+            <i class="fa-solid fa-folder-open fa-3x" style="color:var(--text-muted); margin-bottom:12px;"></i>
+            <h4>Belum Ada Modul Ditambahkan</h4>
+            <p style="color:var(--text-muted); font-size:13px; margin-top:4px;">Admin owner belum mendaftarkan tautan modul web operasional.</p>
+          </div>
+        `;
+      }
+    }
+
+    function openInternalModule(nama, url) {
+      document.getElementById('viewerModulTitle').innerText = nama.toUpperCase();
+      document.getElementById('internalFrame').src = url;
+      document.getElementById('iframeViewerModal').style.display = 'flex';
+    }
+
+    function closeModuleViewer() {
+      document.getElementById('internalFrame').src = '';
+      document.getElementById('iframeViewerModal').style.display = 'none';
+    }
+
+    function copyText(txt) {
+      navigator.clipboard.writeText(txt);
+      alert("Tersalin: " + txt);
+    }
+
+    function handleLogout() {
+      localStorage.removeItem('_brc_user');
+      location.reload();
+    }
+  </script>
 </body>
 </html>
