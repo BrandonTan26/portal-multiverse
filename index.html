@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>BrandRetailCortex.store - Client Portal</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
@@ -20,6 +20,9 @@
       --banner-grad: linear-gradient(135deg, #f1f3fd 0%, #eef2ff 100%);
       --box-kredensial-bg: #fefce8;
       --box-kredensial-border: #fef08a;
+      --warning-bg: #fffbeb;
+      --warning-border: #fde68a;
+      --warning-text: #b45309;
     }
     [data-theme="dark"] {
       --bg: #070a14;
@@ -35,6 +38,9 @@
       --banner-grad: linear-gradient(135deg, #10162a 0%, #171f38 100%);
       --box-kredensial-bg: #1c1a14;
       --box-kredensial-border: #423815;
+      --warning-bg: #1f1b0d;
+      --warning-border: #4a3e14;
+      --warning-text: #fbbf24;
     }
     [data-theme="neon"] {
       --bg: #020205;
@@ -50,406 +56,280 @@
       --banner-grad: linear-gradient(135deg, #150a24 0%, #091a2e 100%);
       --box-kredensial-bg: #1a0f18;
       --box-kredensial-border: #ff007f;
+      --warning-bg: #211200;
+      --warning-border: #ffb703;
+      --warning-text: #ffb703;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-    body { background-color: var(--bg); color: var(--text); min-height: 100vh; transition: 0.3s; }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; -webkit-tap-highlight-color: transparent; }
+    body { background-color: var(--bg); color: var(--text); min-height: 100vh; transition: 0.3s; overflow-x: hidden; }
 
-    /* Spinner Loading */
     #loadingScreen {
       position: fixed; inset: 0; background: var(--bg); z-index: 99999;
       display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px;
     }
     .spinner-wrap {
-      width: 70px; height: 70px; border-radius: 50%;
+      width: 65px; height: 65px; border-radius: 50%;
       border: 3px solid transparent; border-top-color: #06b6d4; border-right-color: var(--primary);
       animation: spin 0.8s linear infinite; display: flex; align-items: center; justify-content: center;
     }
     @keyframes spin { 100% { transform: rotate(360deg); } }
 
-    /* Top Nav */
+    /* Top Nav Responsif */
     .top-nav {
       background: var(--card-bg); border-bottom: 1px solid var(--card-border);
-      padding: 12px 28px; display: flex; align-items: center; justify-content: space-between;
-      position: sticky; top: 0; z-index: 100;
+      padding: 10px 16px; display: flex; align-items: center; justify-content: space-between;
+      position: sticky; top: 0; z-index: 100; gap: 8px;
     }
-    .brand-left { display: flex; align-items: center; gap: 12px; }
-    .brand-title { font-size: 15px; font-weight: 800; letter-spacing: 0.5px; }
+    .brand-left { display: flex; align-items: center; gap: 10px; min-width: 0; }
+    .brand-title { font-size: 13px; font-weight: 800; letter-spacing: 0.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .status-pill-online {
-      background: rgba(16, 185, 129, 0.15); color: #10b981; font-size: 10px;
-      font-weight: 800; padding: 3px 10px; border-radius: 20px;
+      background: rgba(16, 185, 129, 0.15); color: #10b981; font-size: 9px;
+      font-weight: 800; padding: 3px 8px; border-radius: 20px; white-space: nowrap;
     }
-    .top-actions { display: flex; align-items: center; gap: 12px; }
+    .top-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
     .theme-toggle-box {
       background: var(--input-bg); border: 1px solid var(--card-border);
-      border-radius: 20px; display: flex; padding: 3px; gap: 4px;
+      border-radius: 20px; display: flex; padding: 2px; gap: 2px;
     }
     .theme-btn {
-      background: none; border: none; color: var(--text-muted); padding: 5px 10px;
-      border-radius: 14px; cursor: pointer; font-size: 13px;
+      background: none; border: none; color: var(--text-muted); padding: 5px 8px;
+      border-radius: 12px; cursor: pointer; font-size: 12px;
     }
     .theme-btn.active { background: var(--accent-grad); color: #fff; }
     .user-pill {
       background: var(--input-bg); border: 1px solid var(--card-border);
-      padding: 6px 14px; border-radius: 12px; font-size: 12px; font-weight: 700;
-      display: flex; align-items: center; gap: 8px;
+      padding: 5px 10px; border-radius: 10px; font-size: 11px; font-weight: 700;
+      display: flex; align-items: center; gap: 6px; white-space: nowrap;
     }
-    .kode-badge { background: #e0e7ff; color: #4338ca; padding: 2px 6px; border-radius: 6px; font-size: 10px; font-weight: 800; }
+    .kode-badge { background: #e0e7ff; color: #4338ca; padding: 2px 5px; border-radius: 5px; font-size: 9px; font-weight: 800; }
     .btn-keluar {
       border: 1px solid #fee2e2; background: #fff1f2; color: #e11d48;
-      padding: 8px 16px; border-radius: 12px; cursor: pointer; font-size: 12px; font-weight: 700;
-      display: flex; align-items: center; gap: 6px;
+      padding: 6px 12px; border-radius: 10px; cursor: pointer; font-size: 11px; font-weight: 700;
+      display: flex; align-items: center; gap: 4px; white-space: nowrap;
     }
 
-    /* Container */
-    .portal-container { max-width: 1240px; margin: 0 auto; padding: 24px; }
+    /* Layout Container */
+    .portal-container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 16px; }
 
-    /* Welcome Banner */
+    /* Warning Banner */
+    #warningExpBanner {
+      background: var(--warning-bg); border: 1px solid var(--warning-border);
+      border-radius: 16px; padding: 14px 18px; margin-bottom: 16px; display: none;
+      align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+    }
+    .warning-left { display: flex; align-items: center; gap: 10px; color: var(--warning-text); }
+
+    /* Welcome Hero Card */
     .welcome-card {
       background: var(--banner-grad); border: 1px solid var(--card-border);
-      border-radius: 24px; padding: 36px; margin-bottom: 24px; box-shadow: var(--card-shadow);
+      border-radius: 20px; padding: 22px; margin-bottom: 16px; box-shadow: var(--card-shadow);
     }
     .sub-badge {
-      display: inline-flex; align-items: center; gap: 6px; font-size: 11px;
+      display: inline-flex; align-items: center; gap: 6px; font-size: 10px;
       font-weight: 800; color: #10b981; background: rgba(16, 185, 129, 0.12);
-      padding: 6px 14px; border-radius: 20px; margin-bottom: 16px; letter-spacing: 0.5px;
+      padding: 4px 10px; border-radius: 14px; margin-bottom: 12px;
     }
-    .welcome-title { font-size: 38px; font-weight: 900; line-height: 1.15; margin-bottom: 12px; }
+    .welcome-title { font-size: 26px; font-weight: 900; line-height: 1.2; margin-bottom: 8px; }
     .welcome-title span { background: var(--accent-grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    .welcome-subtitle { color: var(--text-muted); font-size: 15px; margin-bottom: 24px; }
-    .welcome-pills { display: flex; flex-wrap: wrap; gap: 10px; }
+    .welcome-subtitle { color: var(--text-muted); font-size: 13px; margin-bottom: 16px; }
+    .welcome-pills { display: flex; flex-wrap: wrap; gap: 6px; }
     .pill {
       background: var(--card-bg); border: 1px solid var(--card-border);
-      padding: 8px 14px; border-radius: 12px; font-size: 12px; font-weight: 600;
-      display: inline-flex; align-items: center; gap: 8px; color: var(--text-muted);
+      padding: 6px 10px; border-radius: 10px; font-size: 11px; font-weight: 600;
+      display: inline-flex; align-items: center; gap: 6px; color: var(--text-muted);
     }
 
-    /* Identitas & Status Langganan */
+    /* Identitas Toko Card */
     .card-info {
       background: var(--card-bg); border: 1px solid var(--card-border);
-      border-radius: 24px; padding: 28px; margin-bottom: 28px; box-shadow: var(--card-shadow);
+      border-radius: 20px; padding: 20px; margin-bottom: 20px; box-shadow: var(--card-shadow);
     }
-    .info-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 16px; }
-    .info-profile { display: flex; align-items: center; gap: 16px; }
+    .info-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 12px; }
+    .info-profile { display: flex; align-items: center; gap: 12px; }
     .icon-store {
-      width: 52px; height: 52px; border-radius: 16px; background: var(--accent-grad);
-      color: white; display: flex; align-items: center; justify-content: center; font-size: 22px;
+      width: 44px; height: 44px; border-radius: 12px; background: var(--accent-grad);
+      color: white; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0;
     }
-    .status-row { font-size: 13px; color: var(--text-muted); margin-bottom: 16px; line-height: 1.6; }
+    .status-row { font-size: 12px; color: var(--text-muted); margin-bottom: 14px; line-height: 1.6; }
     .perm-banner {
       background: var(--banner-grad); border: 1px solid var(--card-border);
-      border-radius: 16px; padding: 18px 24px; display: flex; align-items: center; gap: 16px;
+      border-radius: 14px; padding: 14px 18px; display: flex; align-items: center; gap: 12px;
     }
 
     /* Modul Header */
     .modul-section-head {
-      display: flex; justify-content: space-between; align-items: center;
-      margin-bottom: 20px; flex-wrap: wrap; gap: 12px;
+      display: flex; justify-content: space-between; align-items: flex-end;
+      margin-bottom: 16px; flex-wrap: wrap; gap: 8px;
     }
     .modul-badge {
-      display: inline-flex; align-items: center; gap: 8px; font-size: 11px;
+      display: inline-flex; align-items: center; gap: 6px; font-size: 10px;
       font-weight: 800; color: #6366f1; background: rgba(99, 102, 241, 0.12);
-      padding: 6px 14px; border-radius: 20px; letter-spacing: 0.5px; margin-bottom: 6px;
+      padding: 4px 10px; border-radius: 14px; margin-bottom: 4px;
     }
 
-    /* Module Grid */
-    .modules-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 24px; }
-    @media(max-width: 600px){ .modules-grid { grid-template-columns: 1fr; } }
+    /* Grid Modul Responsif HP & Dekstop */
+    .modules-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; }
+    @media(max-width: 650px) {
+      .modules-grid { grid-template-columns: 1fr; }
+      .welcome-title { font-size: 22px; }
+      .top-nav { padding: 8px 12px; }
+      .user-pill span#topTokoName { max-width: 70px; overflow: hidden; text-overflow: ellipsis; }
+      .brand-title { display: none; }
+    }
 
     .module-card {
       background: var(--card-bg); border: 1px solid var(--card-border);
-      border-radius: 24px; padding: 24px; display: flex; flex-direction: column;
-      justify-content: space-between; box-shadow: var(--card-shadow); transition: transform 0.2s;
+      border-radius: 20px; padding: 18px; display: flex; flex-direction: column;
+      justify-content: space-between; box-shadow: var(--card-shadow);
     }
-    .module-card:hover { transform: translateY(-3px); }
-    .mod-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; }
+    .mod-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
     .mod-icon-box {
-      width: 48px; height: 48px; border-radius: 14px; background: var(--input-bg);
+      width: 42px; height: 42px; border-radius: 12px; background: var(--input-bg);
       border: 1px solid var(--card-border); display: flex; align-items: center; justify-content: center;
-      color: var(--primary); font-size: 20px;
+      color: var(--primary); font-size: 18px;
     }
-    .mod-title { font-size: 18px; font-weight: 800; margin-bottom: 6px; text-transform: uppercase; }
-    .mod-desc { font-size: 13px; color: var(--text-muted); line-height: 1.5; margin-bottom: 18px; }
+    .mod-title { font-size: 16px; font-weight: 800; margin-bottom: 4px; text-transform: uppercase; }
+    .mod-desc { font-size: 12px; color: var(--text-muted); line-height: 1.4; margin-bottom: 14px; }
 
-    /* Kredensial Box */
     .kredensial-box {
       background: var(--box-kredensial-bg); border: 1px solid var(--box-kredensial-border);
-      border-radius: 14px; padding: 14px; margin-bottom: 18px; font-size: 12px;
+      border-radius: 12px; padding: 12px; margin-bottom: 14px; font-size: 11px;
     }
-    .kred-label { color: #d97706; font-weight: 700; margin-bottom: 8px; display: flex; justify-content: space-between; }
-    .kred-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .kred-label { color: #d97706; font-weight: 700; margin-bottom: 6px; display: flex; justify-content: space-between; }
+    .kred-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
     .kred-pill {
       background: var(--card-bg); border: 1px solid var(--card-border);
-      padding: 6px 10px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center;
-      font-size: 11px; font-weight: 600;
+      padding: 5px 8px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center;
+      font-size: 10px; font-weight: 600;
     }
 
     .btn-open-modul {
-      width: 100%; padding: 14px; border: none; border-radius: 14px;
-      background: var(--accent-grad); color: white; font-weight: 800; font-size: 13px;
-      cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
+      width: 100%; padding: 12px; border: none; border-radius: 12px;
+      background: var(--accent-grad); color: white; font-weight: 800; font-size: 12px;
+      cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px;
     }
 
-    /* FULLSCREEN IN-PORTAL MODAL VIEWER */
-    #iframeViewerModal {
-      position: fixed; inset: 0; background: var(--bg); z-index: 99998;
-      display: none; flex-direction: column;
-    }
+    /* Modal Viewer Dalam Portal */
+    #iframeViewerModal { position: fixed; inset: 0; background: var(--bg); z-index: 99998; display: none; flex-direction: column; }
     .viewer-header {
-      height: 56px; background: var(--card-bg); border-bottom: 1px solid var(--card-border);
-      display: flex; align-items: center; justify-content: space-between; padding: 0 20px;
+      height: 52px; background: var(--card-bg); border-bottom: 1px solid var(--card-border);
+      display: flex; align-items: center; justify-content: space-between; padding: 0 16px;
     }
-    .iframe-box { flex: 1; width: 100%; height: calc(100vh - 56px); }
+    .iframe-box { flex: 1; width: 100%; height: calc(100vh - 52px); }
     #internalFrame { width: 100%; height: 100%; border: none; }
 
-    /* AUTH LOGIN / DAFTAR CONTAINER */
-    #authContainer { max-width: 1100px; margin: 40px auto; padding: 20px; display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 40px; align-items: center; }
-    @media(max-width: 900px){ #authContainer { grid-template-columns: 1fr; margin-top: 10px; } }
-    .auth-card {
-      background: var(--card-bg); border: 1px solid var(--card-border);
-      border-radius: 24px; padding: 32px; box-shadow: var(--card-shadow);
-    }
-    .form-group { margin-bottom: 14px; }
-    .form-label { display: block; font-size: 11px; font-weight: 700; color: var(--text-muted); margin-bottom: 6px; }
+    /* Auth Card Form */
+    #authContainer { max-width: 960px; margin: 20px auto; display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 24px; align-items: center; }
+    @media(max-width: 850px){ #authContainer { grid-template-columns: 1fr; margin-top: 0; } }
+    .auth-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 20px; padding: 24px; box-shadow: var(--card-shadow); }
+    .form-group { margin-bottom: 12px; }
+    .form-label { display: block; font-size: 10px; font-weight: 700; color: var(--text-muted); margin-bottom: 4px; }
     .form-input, .form-select {
       width: 100%; background: var(--input-bg); border: 1px solid var(--card-border);
-      padding: 12px 14px; border-radius: 12px; color: var(--text); outline: none; font-size: 14px;
+      padding: 10px 12px; border-radius: 10px; color: var(--text); outline: none; font-size: 13px;
     }
 
-    /* ========================================================
-       MODERN FOOTER & SECURITY NOTICE STYLING
-       ======================================================== */
-    .modern-footer {
-      margin-top: 50px;
-      padding: 0 0 30px;
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-
-    /* Card Disclaimer */
+    /* Footer Modern */
+    .modern-footer { margin-top: 36px; padding-bottom: 24px; display: flex; flex-direction: column; gap: 16px; }
     .footer-alert-card {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 20px;
-      padding: 24px 28px;
-      display: flex;
-      gap: 20px;
-      box-shadow: var(--card-shadow);
-      position: relative;
-      overflow: hidden;
+      background: var(--card-bg); border: 1px solid var(--card-border);
+      border-radius: 18px; padding: 18px; display: flex; gap: 14px;
+      box-shadow: var(--card-shadow); position: relative; overflow: hidden;
     }
-
-    .footer-alert-card::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 5px;
-      height: 100%;
-      background: var(--accent-grad);
-    }
-
+    .footer-alert-card::before { content: ""; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--accent-grad); }
     .footer-alert-icon {
-      width: 48px;
-      height: 48px;
-      border-radius: 14px;
-      background: rgba(99, 102, 241, 0.1);
-      color: var(--primary);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 20px;
-      flex-shrink: 0;
+      width: 40px; height: 40px; border-radius: 12px; background: rgba(99, 102, 241, 0.1);
+      color: var(--primary); display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0;
     }
-
-    [data-theme="neon"] .footer-alert-icon {
-      background: rgba(255, 0, 127, 0.15);
-      color: #ff007f;
-    }
-
-    .footer-alert-content {
-      flex: 1;
-    }
-
-    .footer-alert-header {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 12px;
-      flex-wrap: wrap;
-    }
-
-    .badge-internal {
-      background: rgba(239, 68, 68, 0.12);
-      color: #ef4444;
-      border: 1px solid rgba(239, 68, 68, 0.25);
-      font-size: 11px;
-      font-weight: 800;
-      padding: 4px 10px;
-      border-radius: 8px;
-      letter-spacing: 0.5px;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .badge-system {
-      background: rgba(16, 185, 129, 0.12);
-      color: #10b981;
-      border: 1px solid rgba(16, 185, 129, 0.25);
-      font-size: 11px;
-      font-weight: 700;
-      padding: 4px 10px;
-      border-radius: 8px;
-      letter-spacing: 0.5px;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .footer-desc {
-      font-size: 13px;
-      color: var(--text-muted);
-      line-height: 1.6;
-      margin-bottom: 16px;
-    }
-
-    .footer-desc strong {
-      color: var(--text);
-    }
-
-    .footer-rules-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-
-    @media (max-width: 768px) {
-      .footer-alert-card {
-        flex-direction: column;
-        padding: 20px;
-      }
-      .footer-rules-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
+    .footer-alert-header { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; flex-wrap: wrap; }
+    .badge-internal { background: rgba(239, 68, 68, 0.12); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.25); font-size: 10px; font-weight: 800; padding: 3px 8px; border-radius: 6px; }
+    .badge-system { background: rgba(16, 185, 129, 0.12); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.25); font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 6px; }
+    .footer-desc { font-size: 12px; color: var(--text-muted); line-height: 1.5; margin-bottom: 12px; }
+    .footer-rules-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    @media (max-width: 700px) { .footer-rules-grid { grid-template-columns: 1fr; } .footer-alert-card { flex-direction: column; } }
     .rule-item {
-      background: var(--input-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 12px;
-      padding: 10px 14px;
-      font-size: 12px;
-      color: var(--text-muted);
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      line-height: 1.5;
+      background: var(--input-bg); border: 1px solid var(--card-border);
+      border-radius: 10px; padding: 8px 12px; font-size: 11px; color: var(--text-muted);
+      display: flex; align-items: flex-start; gap: 8px; line-height: 1.4;
     }
-
-    .rule-item i {
-      color: #f59e0b;
-      margin-top: 2px;
-      font-size: 13px;
-    }
-
-    .rule-item:last-child i {
-      color: #6366f1;
-    }
-
-    [data-theme="neon"] .rule-item:last-child i {
-      color: #00f0ff;
-    }
-
-    .rule-item strong {
-      color: var(--text);
-    }
-
     .footer-bottom-bar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 12px 6px;
-      border-top: 1px dashed var(--card-border);
-      font-size: 12px;
-      color: var(--text-muted);
-      flex-wrap: wrap;
-      gap: 12px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 4px; border-top: 1px dashed var(--card-border); font-size: 11px;
+      color: var(--text-muted); flex-wrap: wrap; gap: 8px;
     }
+    .status-dot { width: 7px; height: 7px; border-radius: 50%; background: #10b981; display: inline-block; }
 
-    .footer-brand {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-weight: 700;
-      color: var(--text);
+    /* Pop-up Dialog Formal Terkunci / Terhapus */
+    #expiredModal {
+      position: fixed; inset: 0; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(6px);
+      z-index: 100000; display: none; align-items: center; justify-content: center; padding: 16px;
     }
-
-    .footer-brand i {
-      color: var(--primary);
+    .expired-card {
+      background: var(--card-bg); border: 1px solid var(--card-border);
+      border-radius: 20px; padding: 28px 22px; max-width: 420px; width: 100%;
+      text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.5);
     }
-
-    .footer-copy {
-      color: var(--text-muted);
+    .expired-icon-wrap {
+      width: 56px; height: 56px; border-radius: 16px; background: rgba(239, 68, 68, 0.1);
+      color: #ef4444; display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 16px; font-size: 24px;
     }
-
-    .footer-status-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-weight: 600;
-      font-size: 11px;
-    }
-
-    .status-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: #10b981;
-      box-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
-      display: inline-block;
+    .expired-title { font-size: 17px; font-weight: 800; margin-bottom: 10px; }
+    .expired-msg { font-size: 12px; color: var(--text-muted); line-height: 1.6; margin-bottom: 20px; }
+    .btn-close-modal {
+      width: 100%; padding: 12px; border-radius: 10px; border: none;
+      background: var(--input-bg); color: var(--text); font-weight: 700; font-size: 12px; cursor: pointer;
     }
   </style>
 </head>
 <body data-theme="light">
 
-  <!-- Spinner Layar Loading Logo -->
   <div id="loadingScreen">
     <div class="spinner-wrap">
       <i class="fa-solid fa-cube fa-2x" style="color: #06b6d4;"></i>
     </div>
-    <span style="font-size: 12px; letter-spacing: 2px; font-weight: 700;">CONNECTING TO SERVER...</span>
+    <span style="font-size: 11px; letter-spacing: 2px; font-weight: 700;">CONNECTING SECURE NODE...</span>
+  </div>
+
+  <!-- POP-UP NOTIFIKASI FORMAL -->
+  <div id="expiredModal">
+    <div class="expired-card">
+      <div class="expired-icon-wrap"><i class="fa-solid fa-lock"></i></div>
+      <h3 class="expired-title">Pemberitahuan Layanan Operasional</h3>
+      <p class="expired-msg" id="expiredModalMsg">
+        Masa berlaku langganan akses operasional toko Anda telah berakhir. Seluruh modul dan node sistem telah dinonaktifkan secara otomatis.<br><br>
+        Silakan menghubungi <strong>Administrator</strong> untuk mengajukan permohonan perpanjangan masa sewa layanan agar akses dapat diaktifkan kembali. Terima kasih atas kerja sama Anda.
+      </p>
+      <button class="btn-close-modal" onclick="closeExpiredModal()">Tutup & Kembali</button>
+    </div>
   </div>
 
   <!-- TOP NAVBAR -->
   <header class="top-nav">
     <div class="brand-left">
-      <i class="fa-solid fa-cube fa-xl" style="color: #6366f1;"></i>
+      <i class="fa-solid fa-cube fa-lg" style="color: #6366f1;"></i>
       <div>
-        <div style="display:flex; align-items:center; gap:8px;">
+        <div style="display:flex; align-items:center; gap:6px;">
           <span class="brand-title">BRANDRETAILCORTEX.STORE</span>
           <span class="status-pill-online">ONLINE</span>
         </div>
-        <div style="font-size: 9px; color: var(--text-muted); letter-spacing: 1px; font-weight: 600;">INTERNAL RETAIL OPERATION PLATFORM</div>
       </div>
     </div>
 
     <div class="top-actions">
-      <!-- 3 MODE TOGGLE -->
       <div class="theme-toggle-box">
         <button class="theme-btn active" onclick="setTheme('light', this)"><i class="fa-solid fa-sun"></i></button>
         <button class="theme-btn" onclick="setTheme('dark', this)"><i class="fa-solid fa-moon"></i></button>
         <button class="theme-btn" onclick="setTheme('neon', this)"><i class="fa-solid fa-bolt"></i></button>
       </div>
 
-      <!-- USER INFO HEADER CHIP (MUNCUL SETELAH LOGIN) -->
-      <div id="headerUserInfo" style="display:none; align-items:center; gap:10px;">
+      <div id="headerUserInfo" style="display:none; align-items:center; gap:6px;">
         <div class="user-pill">
-          <span id="topTokoName">CIROKEK</span>
-          <span class="kode-badge" id="topTokoKode">KODE: T939</span>
+          <span id="topTokoName">TOKO</span>
+          <span class="kode-badge" id="topTokoKode">-</span>
         </div>
-        <button class="btn-keluar" onclick="handleLogout()"><i class="fa-solid fa-arrow-right-from-bracket"></i> Keluar</button>
+        <button class="btn-keluar" onclick="handleLogout()"><i class="fa-solid fa-arrow-right-from-bracket"></i></button>
       </div>
     </div>
   </header>
@@ -463,19 +343,17 @@
         <p class="welcome-subtitle">Smart Retail. One Powerful Platform. <b>Manage. Monitor. Optimize.</b></p>
         <div class="welcome-pills">
           <div class="pill"><i class="fa-solid fa-bolt"></i> High-Speed Gateway</div>
-          <div class="pill"><i class="fa-solid fa-shield-halved"></i> Encrypted Retail Node</div>
-          <div class="pill"><i class="fa-solid fa-rotate"></i> Realtime Data Sync</div>
+          <div class="pill"><i class="fa-solid fa-shield-halved"></i> Encrypted Node</div>
           <div class="pill"><i class="fa-solid fa-mobile-screen"></i> 1 Akun = 1 Perangkat</div>
         </div>
       </div>
 
       <div class="auth-card">
-        <div style="display:flex; background:var(--input-bg); border-radius:12px; padding:4px; margin-bottom:20px;">
-          <button id="tabBtnLogin" onclick="switchTab('login')" style="flex:1; padding:10px; border:none; border-radius:10px; background:var(--card-bg); font-weight:700; cursor:pointer; color:var(--text);">Masuk</button>
-          <button id="tabBtnReg" onclick="switchTab('reg')" style="flex:1; padding:10px; border:none; border-radius:10px; background:transparent; font-weight:700; cursor:pointer; color:var(--text-muted);">Daftar Baru</button>
+        <div style="display:flex; background:var(--input-bg); border-radius:12px; padding:4px; margin-bottom:16px;">
+          <button id="tabBtnLogin" onclick="switchTab('login')" style="flex:1; padding:8px; border:none; border-radius:8px; background:var(--card-bg); font-weight:700; cursor:pointer; color:var(--text); font-size:12px;">Masuk</button>
+          <button id="tabBtnReg" onclick="switchTab('reg')" style="flex:1; padding:8px; border:none; border-radius:8px; background:transparent; font-weight:700; cursor:pointer; color:var(--text-muted); font-size:12px;">Daftar Baru</button>
         </div>
 
-        <!-- FORM LOGIN -->
         <form id="formLogin" onsubmit="handleLogin(event)">
           <div class="form-group">
             <label class="form-label">KODE TOKO</label>
@@ -485,18 +363,17 @@
             <label class="form-label">PIN</label>
             <input type="password" id="loginPin" class="form-input" placeholder="••••••" required>
           </div>
-          <button type="submit" class="btn-open-modul" style="margin-top:16px;">Masuk ke Portal</button>
+          <button type="submit" class="btn-open-modul" style="margin-top:12px;">Masuk ke Portal</button>
         </form>
 
-        <!-- FORM DAFTAR -->
         <form id="formRegister" style="display:none;" onsubmit="handleRegister(event)">
           <div class="form-group">
             <label class="form-label">KODE TOKO</label>
-            <input type="text" id="regKode" class="form-input" placeholder="Misal: N005" required>
+            <input type="text" id="regKode" class="form-input" placeholder="Misal: T939" required>
           </div>
           <div class="form-group">
             <label class="form-label">NAMA TOKO</label>
-            <input type="text" id="regNama" class="form-input" placeholder="Misal: BUNDARAN HI" required>
+            <input type="text" id="regNama" class="form-input" placeholder="Nama Toko..." required>
           </div>
           <div class="form-group">
             <label class="form-label">NO. WHATSAPP</label>
@@ -515,149 +392,118 @@
               <option value="PERMANENT">Permanent</option>
             </select>
           </div>
-          <button type="submit" class="btn-open-modul" style="margin-top:16px;"><i class="fa-solid fa-location-crosshairs"></i> Konfirmasi Lokasi & Daftar</button>
+          <button type="submit" class="btn-open-modul" style="margin-top:12px;"><i class="fa-solid fa-location-crosshairs"></i> Konfirmasi Lokasi & Daftar</button>
         </form>
       </div>
     </div>
   </section>
 
-  <!-- 2. DASHBOARD PORTAL CLIENT (SETELAH LOGIN & ISI MODUL OWNER) -->
+  <!-- 2. DASHBOARD PORTAL CLIENT -->
   <main id="portalDashboard" class="portal-container" style="display:none;">
     
-    <!-- BANNER HERO WELCOME -->
+    <div id="warningExpBanner">
+      <div class="warning-left">
+        <i class="fa-solid fa-triangle-exclamation"></i>
+        <div>
+          <strong style="display:block; font-size:12px;">Pemberitahuan Masa Berlaku Akses</strong>
+          <span style="font-size:11px;" id="warningExpMsg">Masa sewa layanan akan segera berakhir.</span>
+        </div>
+      </div>
+      <div>
+        <span class="kode-badge" style="background:#fef3c7; color:#92400e; padding:4px 8px; font-size:10px;" id="badgeSisaHari">Sisa: - Hari</span>
+      </div>
+    </div>
+
     <section class="welcome-card">
-      <div class="sub-badge"><i class="fa-solid fa-circle fa-2xs"></i> ENTERPRISE RETAIL OPERATING SYSTEM</div>
+      <div class="sub-badge"><i class="fa-solid fa-circle fa-2xs"></i> ENTERPRISE RETAIL SYSTEM</div>
       <h1 class="welcome-title">WELCOME TO <span>BRANDRETAILCORTEX.STORE</span></h1>
       <p class="welcome-subtitle">Smart Retail. One Powerful Platform... <b>Manage. Monitor. Optimize.</b></p>
       <div class="welcome-pills">
         <div class="pill"><i class="fa-solid fa-bolt"></i> High-Speed Gateway</div>
-        <div class="pill"><i class="fa-solid fa-shield-halved"></i> Encrypted Retail Node</div>
-        <div class="pill"><i class="fa-solid fa-rotate"></i> Realtime Data Sync</div>
-        <div class="pill"><i class="fa-solid fa-layer-group"></i> Dedicated Multi-User Auth</div>
+        <div class="pill"><i class="fa-solid fa-rotate"></i> Realtime Sync</div>
+        <div class="pill"><i class="fa-solid fa-layer-group"></i> Multi-User Auth</div>
       </div>
     </section>
 
-    <!-- IDENTITAS TOKO & STATUS LANGGANAN -->
     <section class="card-info">
       <div class="info-header">
         <div class="info-profile">
           <div class="icon-store"><i class="fa-solid fa-store"></i></div>
           <div>
-            <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
-              <span style="font-size:10px; font-weight:800; color:#6366f1; background:#e0e7ff; padding:2px 8px; border-radius:10px;">IDENTITAS TOKO AKTIF</span>
+            <div style="display:flex; align-items:center; gap:6px; margin-bottom:2px;">
+              <span style="font-size:9px; font-weight:800; color:#6366f1; background:#e0e7ff; padding:2px 6px; border-radius:8px;">IDENTITAS TOKO</span>
               <i class="fa-solid fa-circle fa-2xs" style="color:#10b981;"></i>
             </div>
-            <h2 style="font-size:22px; font-weight:900;" id="cardTokoName">CIROKEK</h2>
-            <div style="font-size:12px; color:var(--text-muted); font-weight:700;">KODE TOKO: <span id="cardTokoKode" class="kode-badge">T939</span></div>
+            <h2 style="font-size:18px; font-weight:900;" id="cardTokoName">TOKO</h2>
+            <div style="font-size:11px; color:var(--text-muted); font-weight:700;">KODE: <span id="cardTokoKode" class="kode-badge">-</span></div>
           </div>
         </div>
 
-        <div style="display:flex; gap:10px;">
-          <button class="pill" style="cursor:pointer;"><i class="fa-solid fa-circle-info"></i> Detail Akun Toko</button>
+        <div style="display:flex; gap:8px;">
           <button class="btn-keluar" onclick="handleLogout()"><i class="fa-solid fa-arrow-right-from-bracket"></i> Ganti Toko</button>
         </div>
       </div>
 
       <div class="status-row">
         <b>STATUS LAYANAN LANGGANAN:</b> <span class="status-pill-online" id="statusBadge">• Aktif</span><br>
-        Paket: <b id="paketTxt">Permanen</b>. Akses seluruh modul operasional ritel aktif dan terhubung secara realtime dengan server Cortex.<br>
-        <span style="font-size:12px; margin-top:4px; display:inline-block;">
-          <i class="fa-regular fa-calendar"></i> Mulai: <span id="tglMulai">10 Okt 2026</span> &nbsp;•&nbsp; 
-          <i class="fa-regular fa-calendar-check"></i> Berakhir: <span id="tglBerakhir">Permanen</span>
+        Paket: <b id="paketTxt">-</b>. Akses seluruh modul operasional ritel aktif terhubung realtime.<br>
+        <span style="font-size:11px; margin-top:2px; display:inline-block;">
+          <i class="fa-regular fa-calendar-check"></i> Jatuh Tempo: <span id="tglBerakhir">-</span>
         </span>
       </div>
 
       <div class="perm-banner">
-        <i class="fa-solid fa-infinity fa-2x" style="color:#6366f1;"></i>
+        <i class="fa-solid fa-infinity fa-lg" style="color:#6366f1;" id="bannerExpIcon"></i>
         <div>
-          <h4 style="font-size:14px; font-weight:800;" id="bannerExpTitle">AKSES PERMANEN AKTIF</h4>
-          <p style="font-size:12px; color:var(--text-muted);" id="bannerExpSub">Tanpa Batas Waktu Kadaluarsa</p>
+          <h4 style="font-size:13px; font-weight:800;" id="bannerExpTitle">AKSES PERMANEN AKTIF</h4>
+          <p style="font-size:11px; color:var(--text-muted);" id="bannerExpSub">Tanpa Batas Waktu Kadaluarsa</p>
         </div>
       </div>
     </section>
 
-    <!-- KATALOG MODUL RUANG KERJA TOKO -->
     <section>
       <div class="modul-section-head">
         <div>
-          <div class="modul-badge"><i class="fa-solid fa-tower-broadcast"></i> <span id="totalModulBadge">4 MODUL OPERASIONAL RETAIL UTAMA</span></div>
-          <h2 style="font-size:24px; font-weight:900;">Pusat Ruang Kerja Operasional Toko</h2>
-          <p style="font-size:13px; color:var(--text-muted); margin-top:2px;">Semua modul berjalan eksklusif di dalam 1 portal terpadu dengan koneksi aman realtime.</p>
-        </div>
-        <div>
-          <span class="status-pill-online" style="padding:6px 14px; font-size:11px;"><i class="fa-solid fa-circle fa-2xs"></i> STATUS: TERHUBUNG AKTIF REALTIME</span>
+          <div class="modul-badge"><i class="fa-solid fa-tower-broadcast"></i> <span id="totalModulBadge">0 MODUL UTAMA</span></div>
+          <h2 style="font-size:18px; font-weight:900;">Pusat Ruang Kerja Operasional Toko</h2>
         </div>
       </div>
 
-      <!-- GRID DAFTAR MODUL DARI OWNER -->
-      <div class="modules-grid" id="modulesContainer">
-        <!-- Render Otomatis dari Database Modules Google Sheet -->
-      </div>
+      <div class="modules-grid" id="modulesContainer"></div>
     </section>
 
-    <!-- FOOTER MODERN & ENTERPRISE DISCLAIMER -->
     <footer class="modern-footer">
-      <!-- Kartu Peringatan Keamanan -->
       <div class="footer-alert-card">
-        <div class="footer-alert-icon">
-          <i class="fa-solid fa-shield-halved"></i>
-        </div>
-        
-        <div class="footer-alert-content">
+        <div class="footer-alert-icon"><i class="fa-solid fa-shield-halved"></i></div>
+        <div style="flex:1;">
           <div class="footer-alert-header">
-            <span class="badge-internal">
-              <i class="fa-solid fa-lock"></i> INTERNAL USE ONLY
-            </span>
-            <span class="badge-system">
-              <i class="fa-solid fa-shield-check"></i> SECURE ENVIRONMENT
-            </span>
+            <span class="badge-internal"><i class="fa-solid fa-lock"></i> INTERNAL USE ONLY</span>
+            <span class="badge-system"><i class="fa-solid fa-shield-check"></i> SECURE NODE</span>
           </div>
-
-          <p class="footer-desc">
-            Platform ini dikembangkan secara eksklusif untuk membantu <strong>mempercepat, mempermudah, dan meningkatkan akurasi</strong> pekerjaan operasional toko.
-          </p>
-
+          <p class="footer-desc">Platform dibuat untuk mempercepat, mempermudah, dan meningkatkan akurasi operasional toko.</p>
           <div class="footer-rules-grid">
-            <div class="rule-item">
-              <i class="fa-solid fa-triangle-exclamation"></i>
-              <span>Dilarang menyebarluaskan tautan modul, akun akses, maupun data operasional kepada pihak luar tanpa izin resmi.</span>
-            </div>
-            <div class="rule-item">
-              <i class="fa-solid fa-arrow-right-from-bracket"></i>
-              <span>Wajib selalu <strong>logout</strong> setelah selesai menggunakan modul, terutama saat bekerja pada perangkat bersama.</span>
-            </div>
+            <div class="rule-item"><i class="fa-solid fa-triangle-exclamation"></i><span>Dilarang menyebarluaskan link / akun kepada pihak luar tanpa izin.</span></div>
+            <div class="rule-item"><i class="fa-solid fa-arrow-right-from-bracket"></i><span>Pastikan logout setelah selesai menggunakan modul.</span></div>
           </div>
         </div>
       </div>
-
-      <!-- Copyright & Metadata Bar -->
       <div class="footer-bottom-bar">
-        <div class="footer-brand">
-          <i class="fa-solid fa-cube"></i>
-          <span>BrandRetailCortex.store</span>
-        </div>
-        <div class="footer-copy">
-          © 2026 BrandRetailCortex. All rights reserved. • Enterprise Operating System v2.4
-        </div>
-        <div class="footer-status-pill">
-          <span class="status-dot"></span> System Protected
-        </div>
+        <span style="font-weight:700;"><i class="fa-solid fa-cube" style="color:var(--primary);"></i> BrandRetailCortex.store</span>
+        <span>© 2026 Enterprise OS v2.4</span>
       </div>
     </footer>
   </main>
 
-  <!-- 3. IN-PORTAL SECURE IFRAME VIEWER (TIDAK BUKA TAB BARU) -->
+  <!-- MODAL VIEWER -->
   <div id="iframeViewerModal">
     <div class="viewer-header">
-      <div style="display:flex; align-items:center; gap:12px;">
-        <button onclick="closeModuleViewer()" style="background:var(--input-bg); border:1px solid var(--card-border); color:var(--text); padding:6px 14px; border-radius:10px; cursor:pointer; font-weight:700; font-size:12px;">
-          <i class="fa-solid fa-arrow-left"></i> Kembali ke Dashboard
+      <div style="display:flex; align-items:center; gap:8px;">
+        <button onclick="closeModuleViewer()" style="background:var(--input-bg); border:1px solid var(--card-border); color:var(--text); padding:6px 10px; border-radius:8px; cursor:pointer; font-weight:700; font-size:11px;">
+          <i class="fa-solid fa-arrow-left"></i> Kembali
         </button>
-        <span style="font-weight:800; font-size:14px;" id="viewerModulTitle">RUANG KERJA MODUL</span>
+        <span style="font-weight:800; font-size:12px;" id="viewerModulTitle">MODUL</span>
       </div>
-      <div>
-        <span class="status-pill-online"><i class="fa-solid fa-shield-halved"></i> SECURE EMBEDDED SESSION</span>
-      </div>
+      <span class="status-pill-online"><i class="fa-solid fa-shield-halved"></i> SECURE SESSION</span>
     </div>
     <div class="iframe-box">
       <iframe id="internalFrame" sandbox="allow-scripts allow-forms allow-same-origin"></iframe>
@@ -667,7 +513,6 @@
   <script>
     const API_URL = "https://script.google.com/macros/s/AKfycbzuN1LXzT2Jh963ob1LnxuxBdGsjzk6fNbP7hd-oggHZtHtiXuo9nAs47z1yrFqfOo1kQ/exec";
 
-    // Kunci Perangkat: 1 Akun = 1 HP
     let localDeviceId = localStorage.getItem("_brc_device_id");
     if (!localDeviceId) {
       localDeviceId = 'DEV-' + Math.random().toString(36).substring(2, 9).toUpperCase() + '-' + Date.now();
@@ -698,7 +543,7 @@
       }
     }
 
-    // Proteksi Keamanan Anti Buka Inspect / Klik Kanan
+    // Anti Inspect / Klik Kanan
     document.addEventListener('contextmenu', e => e.preventDefault());
     document.onkeydown = function(e) {
       if (e.keyCode == 123 || (e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 74)) || (e.ctrlKey && e.keyCode == 85)) {
@@ -706,16 +551,66 @@
       }
     };
 
-    window.addEventListener('load', () => {
+    function showExpiredNotice(customMsg) {
+      if (customMsg) {
+        document.getElementById('expiredModalMsg').innerHTML = customMsg;
+      }
+      document.getElementById('expiredModal').style.display = 'flex';
+    }
+    function closeExpiredModal() {
+      document.getElementById('expiredModal').style.display = 'none';
+    }
+
+    // AUTO-KICK & VALIDAASI REALTIME DENGAN GOOGLE SHEET
+    async function checkServerAccountStatus(user) {
+      try {
+        const res = await fetch(`${API_URL}?action=check_status&kode_toko=${encodeURIComponent(user.kode_toko)}&device_id=${encodeURIComponent(localDeviceId)}&_t=${Date.now()}`);
+        const data = await res.json();
+        
+        if (!data.valid) {
+          // JIKA USER DIHAPUS OLEH OWNER / DI-BLOKIR
+          localStorage.removeItem('_brc_user');
+          document.getElementById('portalDashboard').style.display = 'none';
+          document.getElementById('authSection').style.display = 'block';
+          document.getElementById('headerUserInfo').style.display = 'none';
+          document.getElementById('loadingScreen').style.display = 'none';
+
+          if (data.reason === "deleted") {
+            showExpiredNotice("Akses akun toko ini telah dinonaktifkan atau dihapus dari sistem oleh Administrator. Silakan hubungi admin jika ini merupakan kekeliruan.");
+          } else {
+            showExpiredNotice(data.message);
+          }
+          return false;
+        }
+        return true;
+      } catch (err) {
+        return true; // Abaikan jika ada gangguan jaringan sesaat
+      }
+    }
+
+    window.addEventListener('load', async () => {
       const savedUser = localStorage.getItem('_brc_user');
       if (savedUser) {
-        showDashboard(JSON.parse(savedUser));
+        const user = JSON.parse(savedUser);
+        const isValid = await checkServerAccountStatus(user);
+        if (isValid) {
+          showDashboard(user);
+        }
       } else {
         document.getElementById('loadingScreen').style.display = 'none';
       }
     });
 
-    // Pendaftaran dengan Autokonfirmasi GPS
+    // PING SERVER TIAP 10 DETIK (Deteksi real-time jika dihapus di HP owner)
+    setInterval(async () => {
+      const savedUser = localStorage.getItem('_brc_user');
+      if (savedUser) {
+        const user = JSON.parse(savedUser);
+        await checkServerAccountStatus(user);
+      }
+    }, 10000);
+
+    // Registrasi
     async function handleRegister(e) {
       e.preventDefault();
       document.getElementById('loadingScreen').style.display = 'flex';
@@ -757,7 +652,7 @@
       }, { enableHighAccuracy: true });
     }
 
-    // Login User
+    // Login
     async function handleLogin(e) {
       e.preventDefault();
       document.getElementById('loadingScreen').style.display = 'flex';
@@ -778,7 +673,11 @@
           localStorage.setItem('_brc_user', JSON.stringify(resData.user));
           showDashboard(resData.user);
         } else {
-          alert(resData.message);
+          if (resData.message && resData.message.toLowerCase().includes("habis")) {
+            showExpiredNotice();
+          } else {
+            alert(resData.message);
+          }
         }
       } catch(err) {
         alert("Koneksi gagal.");
@@ -791,30 +690,48 @@
       document.getElementById('headerUserInfo').style.display = 'flex';
       document.getElementById('portalDashboard').style.display = 'block';
 
-      // Pasang Info Toko
       document.getElementById('topTokoName').innerText = user.nama_toko;
       document.getElementById('topTokoKode').innerText = 'KODE: ' + user.kode_toko;
       document.getElementById('cardTokoName').innerText = user.nama_toko;
       document.getElementById('cardTokoKode').innerText = user.kode_toko;
       document.getElementById('paketTxt').innerText = user.durasi;
 
-      if(user.durasi === 'PERMANENT') {
+      const bannerWarning = document.getElementById('warningExpBanner');
+      if (user.durasi !== 'PERMANENT' && user.expired_at) {
+        const now = new Date();
+        const expDate = new Date(user.expired_at);
+        const diffDays = Math.ceil((expDate - now) / (1000 * 60 * 60 * 24));
+
+        if (diffDays <= 7 && diffDays > 0) {
+          bannerWarning.style.display = 'flex';
+          document.getElementById('badgeSisaHari').innerText = `Sisa: ${diffDays} Hari`;
+          document.getElementById('warningExpMsg').innerText = `Masa berlaku layanan toko Anda tersisa ${diffDays} hari lagi. Mohon koordinasi dengan Administrator.`;
+        } else {
+          bannerWarning.style.display = 'none';
+        }
+      } else {
+        bannerWarning.style.display = 'none';
+      }
+
+      if (user.durasi === 'PERMANENT') {
         document.getElementById('bannerExpTitle').innerText = 'AKSES PERMANEN AKTIF';
         document.getElementById('bannerExpSub').innerText = 'Tanpa Batas Waktu Kadaluarsa';
         document.getElementById('tglBerakhir').innerText = 'Permanen';
+        document.getElementById('bannerExpIcon').className = 'fa-solid fa-infinity fa-lg';
       } else {
+        const expFormatted = user.expired_at ? new Date(user.expired_at).toLocaleDateString('id-ID', {day:'numeric', month:'short', year:'numeric'}) : '-';
         document.getElementById('bannerExpTitle').innerText = 'AKSES BERLANGGANAN AKTIF';
-        document.getElementById('bannerExpSub').innerText = 'Berlaku hingga: ' + (user.expired_at ? new Date(user.expired_at).toLocaleDateString() : '-');
-        document.getElementById('tglBerakhir').innerText = user.expired_at ? new Date(user.expired_at).toLocaleDateString() : '-';
+        document.getElementById('bannerExpSub').innerText = 'Berlaku hingga: ' + expFormatted;
+        document.getElementById('tglBerakhir').innerText = expFormatted;
+        document.getElementById('bannerExpIcon').className = 'fa-solid fa-calendar-check fa-lg';
       }
 
-      // Ambil Modul Tersimpan dari Database Owner
       await loadModulesClient(user);
       document.getElementById('loadingScreen').style.display = 'none';
     }
 
     async function loadModulesClient(user) {
-      const res = await fetch(`${API_URL}?action=get_modules_client`);
+      const res = await fetch(`${API_URL}?action=get_modules_client&_t=${Date.now()}`);
       const data = await res.json();
       const container = document.getElementById('modulesContainer');
       container.innerHTML = '';
@@ -822,7 +739,7 @@
       const iconList = ['fa-chart-simple', 'fa-file-lines', 'fa-magnifying-glass', 'fa-print', 'fa-boxes-stacked', 'fa-cash-register'];
 
       if (data.modules && data.modules.length > 0) {
-        document.getElementById('totalModulBadge').innerText = `${data.modules.length} MODUL OPERASIONAL RETAIL UTAMA`;
+        document.getElementById('totalModulBadge').innerText = `${data.modules.length} MODUL UTAMA`;
 
         data.modules.forEach((mod, index) => {
           const randomIcon = iconList[index % iconList.length];
@@ -840,7 +757,7 @@
               <div class="kredensial-box">
                 <div class="kred-label">
                   <span><i class="fa-solid fa-shield-halved"></i> KREDENSIAL KHUSUS MODUL</span>
-                  <span style="font-size:10px;">TERKUNCI OTOMATIS</span>
+                  <span style="font-size:9px;">TERKUNCI OTOMATIS</span>
                 </div>
                 <div class="kred-inputs">
                   <div class="kred-pill">
@@ -862,12 +779,12 @@
           container.appendChild(card);
         });
       } else {
-        document.getElementById('totalModulBadge').innerText = `0 MODUL OPERASIONAL`;
+        document.getElementById('totalModulBadge').innerText = `0 MODUL`;
         container.innerHTML = `
-          <div style="grid-column: 1/-1; text-align:center; padding:50px; background:var(--card-bg); border-radius:20px; border:1px solid var(--card-border);">
-            <i class="fa-solid fa-folder-open fa-3x" style="color:var(--text-muted); margin-bottom:12px;"></i>
-            <h4>Belum Ada Modul Ditambahkan</h4>
-            <p style="color:var(--text-muted); font-size:13px; margin-top:4px;">Admin owner belum mendaftarkan tautan modul web operasional.</p>
+          <div style="grid-column: 1/-1; text-align:center; padding:36px; background:var(--card-bg); border-radius:18px; border:1px solid var(--card-border);">
+            <i class="fa-solid fa-folder-open fa-2x" style="color:var(--text-muted); margin-bottom:8px;"></i>
+            <h4 style="font-size:14px;">Belum Ada Modul Ditambahkan</h4>
+            <p style="color:var(--text-muted); font-size:12px; margin-top:2px;">Admin owner belum mendaftarkan tautan modul web operasional.</p>
           </div>
         `;
       }
