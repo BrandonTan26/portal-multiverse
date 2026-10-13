@@ -64,25 +64,37 @@
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; -webkit-tap-highlight-color: transparent; }
     body { background-color: var(--bg); color: var(--text); min-height: 100vh; transition: 0.3s; overflow-x: hidden; }
 
-    /* Loading Spinner */
+    /* LOADING SCREEN & SPINNER LOGO */
     #loadingScreen {
       position: fixed; inset: 0; background: var(--bg); z-index: 99999;
       display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px;
     }
     .spinner-wrap {
-      width: 65px; height: 65px; border-radius: 50%;
+      position: relative; width: 80px; height: 80px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .spinner-ring {
+      position: absolute; inset: 0; border-radius: 50%;
       border: 3px solid transparent; border-top-color: #06b6d4; border-right-color: var(--primary);
-      animation: spin 0.8s linear infinite; display: flex; align-items: center; justify-content: center;
+      animation: spin 0.9s linear infinite;
+    }
+    .spinner-logo-img {
+      width: 52px; height: 52px; border-radius: 50%; object-fit: cover;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
     }
     @keyframes spin { 100% { transform: rotate(360deg); } }
 
-    /* Top Nav */
+    /* TOP NAVBAR */
     .top-nav {
       background: var(--card-bg); border-bottom: 1px solid var(--card-border);
       padding: 10px 16px; display: flex; align-items: center; justify-content: space-between;
       position: sticky; top: 0; z-index: 100; gap: 8px;
     }
     .brand-left { display: flex; align-items: center; gap: 10px; min-width: 0; }
+    .brand-logo-nav {
+      width: 32px; height: 32px; border-radius: 8px; object-fit: cover;
+      border: 1px solid var(--card-border); flex-shrink: 0;
+    }
     .brand-title { font-size: 13px; font-weight: 800; letter-spacing: 0.5px; white-space: nowrap; }
     .status-pill-online {
       background: rgba(16, 185, 129, 0.15); color: #10b981; font-size: 9px;
@@ -110,10 +122,9 @@
       display: flex; align-items: center; gap: 4px; white-space: nowrap;
     }
 
-    /* Container */
+    /* CONTAINER & CARDS */
     .portal-container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 16px; }
 
-    /* Warning Banner */
     #warningExpBanner {
       background: var(--warning-bg); border: 1px solid var(--warning-border);
       border-radius: 16px; padding: 14px 18px; margin-bottom: 16px; display: none;
@@ -121,7 +132,6 @@
     }
     .warning-left { display: flex; align-items: center; gap: 10px; color: var(--warning-text); }
 
-    /* Hero Banner */
     .welcome-card {
       background: var(--banner-grad); border: 1px solid var(--card-border);
       border-radius: 20px; padding: 22px; margin-bottom: 16px; box-shadow: var(--card-shadow);
@@ -141,7 +151,6 @@
       display: inline-flex; align-items: center; gap: 6px; color: var(--text-muted);
     }
 
-    /* Identitas Toko Card */
     .card-info {
       background: var(--card-bg); border: 1px solid var(--card-border);
       border-radius: 20px; padding: 20px; margin-bottom: 20px; box-shadow: var(--card-shadow);
@@ -158,7 +167,6 @@
       border-radius: 14px; padding: 14px 18px; display: flex; align-items: center; gap: 12px;
     }
 
-    /* Header Modul */
     .modul-section-head {
       display: flex; justify-content: space-between; align-items: flex-end;
       margin-bottom: 16px; flex-wrap: wrap; gap: 8px;
@@ -169,7 +177,6 @@
       padding: 4px 10px; border-radius: 14px; margin-bottom: 4px;
     }
 
-    /* Grid Modul Responsif */
     .modules-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; }
     @media(max-width: 650px) {
       .modules-grid { grid-template-columns: 1fr; }
@@ -211,7 +218,6 @@
       cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px;
     }
 
-    /* Modal Viewer */
     #iframeViewerModal { position: fixed; inset: 0; background: var(--bg); z-index: 99998; display: none; flex-direction: column; }
     .viewer-header {
       height: 52px; background: var(--card-bg); border-bottom: 1px solid var(--card-border);
@@ -220,7 +226,6 @@
     .iframe-box { flex: 1; width: 100%; height: calc(100vh - 52px); }
     #internalFrame { width: 100%; height: 100%; border: none; }
 
-    /* Auth Box */
     #authContainer { max-width: 960px; margin: 20px auto; display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 24px; align-items: center; }
     @media(max-width: 850px){ #authContainer { grid-template-columns: 1fr; margin-top: 0; } }
     .auth-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 20px; padding: 24px; box-shadow: var(--card-shadow); }
@@ -231,7 +236,6 @@
       padding: 10px 12px; border-radius: 10px; color: var(--text); outline: none; font-size: 13px;
     }
 
-    /* Footer */
     .modern-footer { margin-top: 36px; padding-bottom: 24px; display: flex; flex-direction: column; gap: 16px; }
     .footer-alert-card {
       background: var(--card-bg); border: 1px solid var(--card-border);
@@ -260,7 +264,6 @@
       color: var(--text-muted); flex-wrap: wrap; gap: 8px;
     }
 
-    /* Modal Formal */
     #expiredModal {
       position: fixed; inset: 0; background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(6px);
       z-index: 100000; display: none; align-items: center; justify-content: center; padding: 16px;
@@ -285,14 +288,15 @@
 </head>
 <body data-theme="light">
 
+  <!-- SPINNER DENGAN LOGO ASLI (LOGO.JPEG) -->
   <div id="loadingScreen">
     <div class="spinner-wrap">
-      <i class="fa-solid fa-cube fa-2x" style="color: #06b6d4;"></i>
+      <div class="spinner-ring"></div>
+      <img src="logo.jpeg" alt="Logo" class="spinner-logo-img">
     </div>
     <span style="font-size: 11px; letter-spacing: 2px; font-weight: 700;">CONNECTING SECURE NODE...</span>
   </div>
 
-  <!-- POP-UP DIALOG FORMAL -->
   <div id="expiredModal">
     <div class="expired-card">
       <div class="expired-icon-wrap"><i class="fa-solid fa-lock"></i></div>
@@ -305,10 +309,10 @@
     </div>
   </div>
 
-  <!-- TOP NAVBAR -->
+  <!-- NAVBAR DENGAN LOGO ASLI (LOGO.JPEG) -->
   <header class="top-nav">
     <div class="brand-left">
-      <i class="fa-solid fa-cube fa-lg" style="color: #6366f1;"></i>
+      <img src="logo.jpeg" alt="Logo Brand" class="brand-logo-nav">
       <div>
         <div style="display:flex; align-items:center; gap:6px;">
           <span class="brand-title">BRANDRETAILCORTEX.STORE</span>
@@ -494,7 +498,7 @@
     </footer>
   </main>
 
-  <!-- MODAL VIEWER IFRAME INTERNAL -->
+  <!-- MODAL VIEWER -->
   <div id="iframeViewerModal">
     <div class="viewer-header">
       <div style="display:flex; align-items:center; gap:8px;">
@@ -513,7 +517,6 @@
   <script>
     const API_URL = "https://script.google.com/macros/s/AKfycbzuN1LXzT2Jh963ob1LnxuxBdGsjzk6fNbP7hd-oggHZtHtiXuo9nAs47z1yrFqfOo1kQ/exec";
 
-    // Kunci Perangkat: 1 Akun = 1 HP
     let localDeviceId = localStorage.getItem("_brc_device_id");
     if (!localDeviceId) {
       localDeviceId = 'DEV-' + Math.random().toString(36).substring(2, 9).toUpperCase() + '-' + Date.now();
@@ -544,7 +547,6 @@
       }
     }
 
-    // Anti Inspect / Klik Kanan
     document.addEventListener('contextmenu', e => e.preventDefault());
     document.onkeydown = function(e) {
       if (e.keyCode == 123 || (e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 74)) || (e.ctrlKey && e.keyCode == 85)) {
@@ -562,7 +564,6 @@
       document.getElementById('expiredModal').style.display = 'none';
     }
 
-    // AUTO-KICK JIKA DIHAPUS / STATUS BERUBAH DI OWNER
     async function checkServerAccountStatus(user) {
       try {
         const res = await fetch(`${API_URL}?action=check_status&kode_toko=${encodeURIComponent(user.kode_toko)}&device_id=${encodeURIComponent(localDeviceId)}&_t=${Date.now()}`);
@@ -597,7 +598,6 @@
       }
     });
 
-    // PING SERVER TIAP 10 DETIK (Deteksi real-time jika dihapus di HP owner)
     setInterval(async () => {
       const savedUser = localStorage.getItem('_brc_user');
       if (savedUser) {
@@ -606,7 +606,6 @@
       }
     }, 10000);
 
-    // Registrasi
     async function handleRegister(e) {
       e.preventDefault();
       document.getElementById('loadingScreen').style.display = 'flex';
@@ -648,7 +647,6 @@
       }, { enableHighAccuracy: true });
     }
 
-    // Login
     async function handleLogin(e) {
       e.preventDefault();
       document.getElementById('loadingScreen').style.display = 'flex';
