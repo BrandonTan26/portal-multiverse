@@ -4,6 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>BrandRetailCortex.store - Client Portal</title>
+
+  <!-- DUKUNGAN PWA AGAR BISA DIINSTAL DARI MENU TITIK TIGA CHROME HP -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#070a14">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="BRC Store">
+  <link rel="apple-touch-icon" href="logo.jpeg">
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
@@ -64,7 +74,6 @@
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; -webkit-tap-highlight-color: transparent; }
     body { background-color: var(--bg); color: var(--text); min-height: 100vh; transition: 0.3s; overflow-x: hidden; }
 
-    /* LOADING SCREEN & SPINNER LOGO */
     #loadingScreen {
       position: fixed; inset: 0; background: var(--bg); z-index: 99999;
       display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px;
@@ -84,7 +93,6 @@
     }
     @keyframes spin { 100% { transform: rotate(360deg); } }
 
-    /* TOP NAVBAR */
     .top-nav {
       background: var(--card-bg); border-bottom: 1px solid var(--card-border);
       padding: 10px 16px; display: flex; align-items: center; justify-content: space-between;
@@ -122,7 +130,6 @@
       display: flex; align-items: center; gap: 4px; white-space: nowrap;
     }
 
-    /* CONTAINER & CARDS */
     .portal-container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 16px; }
 
     #warningExpBanner {
@@ -288,7 +295,6 @@
 </head>
 <body data-theme="light">
 
-  <!-- SPINNER DENGAN LOGO ASLI (LOGO.JPEG) -->
   <div id="loadingScreen">
     <div class="spinner-wrap">
       <div class="spinner-ring"></div>
@@ -309,7 +315,6 @@
     </div>
   </div>
 
-  <!-- NAVBAR DENGAN LOGO ASLI (LOGO.JPEG) -->
   <header class="top-nav">
     <div class="brand-left">
       <img src="logo.jpeg" alt="Logo Brand" class="brand-logo-nav">
@@ -452,7 +457,7 @@
         <b>STATUS LAYANAN LANGGANAN:</b> <span class="status-pill-online" id="statusBadge">• Aktif</span><br>
         Paket: <b id="paketTxt">-</b>. Akses seluruh modul operasional ritel aktif terhubung realtime.<br>
         <span style="font-size:11px; margin-top:2px; display:inline-block;">
-          <i class="fa-regular fa-calendar-check"></i> Jatuh Tempo: <span id="tglBerakhir">-</span>
+          <i class="fa-regular fa-calendar-check"></i> Jatuh Tempo: <span id="tglBerakhir" style="font-weight:700;">-</span>
         </span>
       </div>
 
@@ -498,7 +503,7 @@
     </footer>
   </main>
 
-  <!-- MODAL VIEWER -->
+  <!-- MODAL VIEWER (IZIN DOWNLOAD PDF & POPUP TETAP AKTIF) -->
   <div id="iframeViewerModal">
     <div class="viewer-header">
       <div style="display:flex; align-items:center; gap:8px;">
@@ -510,12 +515,21 @@
       <span class="status-pill-online"><i class="fa-solid fa-shield-halved"></i> SECURE SESSION</span>
     </div>
     <div class="iframe-box">
-      <iframe id="internalFrame" sandbox="allow-scripts allow-forms allow-same-origin"></iframe>
+      <iframe id="internalFrame" sandbox="allow-scripts allow-forms allow-same-origin allow-downloads allow-popups allow-popups-to-escape-sandbox"></iframe>
     </div>
   </div>
 
   <script>
     const API_URL = "https://script.google.com/macros/s/AKfycbzuN1LXzT2Jh963ob1LnxuxBdGsjzk6fNbP7hd-oggHZtHtiXuo9nAs47z1yrFqfOo1kQ/exec";
+
+    // REGISTRASI SERVICE WORKER UNTUK OPSI INSTAL DI GOOGLE CHROME
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+          .then(() => console.log("PWA Aktif"))
+          .catch((err) => console.log("SW Gagal:", err));
+      });
+    }
 
     let localDeviceId = localStorage.getItem("_brc_device_id");
     if (!localDeviceId) {
@@ -526,7 +540,7 @@
     function setTheme(mode, elem) {
       document.body.setAttribute('data-theme', mode);
       document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
-      elem.classList.add('active');
+      if (elem) elem.classList.add('active');
     }
 
     function switchTab(t) {
@@ -564,12 +578,14 @@
       document.getElementById('expiredModal').style.display = 'none';
     }
 
+    // CHECK STATUS REALTIME: MENGUPDATE TANGGAL & AUTO-KICK BILA EXPIRED/DIHAPUS
     async function checkServerAccountStatus(user) {
       try {
         const res = await fetch(`${API_URL}?action=check_status&kode_toko=${encodeURIComponent(user.kode_toko)}&device_id=${encodeURIComponent(localDeviceId)}&_t=${Date.now()}`);
         const data = await res.json();
         
         if (!data.valid) {
+          // BILA EXPIRED ATAU STATUS BUKAN ACTIVE -> TENDANG LOGOUT KELUAR
           localStorage.removeItem('_brc_user');
           document.getElementById('portalDashboard').style.display = 'none';
           document.getElementById('authSection').style.display = 'block';
@@ -578,11 +594,55 @@
 
           showExpiredNotice(data.message || "Akses akun toko telah dinonaktifkan oleh Administrator.");
           return false;
+        } else {
+          // UPDATE DATA EXPIRED TERBARU DARI GOOGLE SHEET KE MEMORI HP & TAMPILAN
+          if (data.expired_at !== undefined) {
+            user.expired_at = data.expired_at;
+            user.durasi = data.durasi;
+            user.status = data.status;
+            localStorage.setItem('_brc_user', JSON.stringify(user));
+            
+            // Perbarui tanggal jatuh tempo seketika
+            updateDisplayDates(user);
+          }
+          return true;
         }
-        return true;
       } catch (err) {
         return true;
       }
+    }
+
+    function updateDisplayDates(user) {
+      const bannerWarning = document.getElementById('warningExpBanner');
+      if (user.durasi !== 'PERMANENT' && user.expired_at) {
+        const now = new Date();
+        const expDate = new Date(user.expired_at);
+        const diffDays = Math.ceil((expDate - now) / (1000 * 60 * 60 * 24));
+
+        if (diffDays <= 7 && diffDays > 0) {
+          bannerWarning.style.display = 'flex';
+          document.getElementById('badgeSisaHari').innerText = `Sisa: ${diffDays} Hari`;
+          document.getElementById('warningExpMsg').innerText = `Masa berlaku layanan toko Anda tersisa ${diffDays} hari lagi. Mohon koordinasi dengan Administrator.`;
+        } else {
+          bannerWarning.style.display = 'none';
+        }
+      } else {
+        bannerWarning.style.display = 'none';
+      }
+
+      if (user.durasi === 'PERMANENT') {
+        document.getElementById('bannerExpTitle').innerText = 'AKSES PERMANEN AKTIF';
+        document.getElementById('bannerExpSub').innerText = 'Tanpa Batas Waktu Kadaluarsa';
+        document.getElementById('tglBerakhir').innerText = 'Permanen';
+        document.getElementById('bannerExpIcon').className = 'fa-solid fa-infinity fa-lg';
+      } else {
+        const expFormatted = user.expired_at ? new Date(user.expired_at).toLocaleDateString('id-ID', {day:'numeric', month:'short', year:'numeric'}) : '-';
+        document.getElementById('bannerExpTitle').innerText = 'AKSES BERLANGGANAN AKTIF';
+        document.getElementById('bannerExpSub').innerText = 'Berlaku hingga: ' + expFormatted;
+        document.getElementById('tglBerakhir').innerText = expFormatted;
+        document.getElementById('bannerExpIcon').className = 'fa-solid fa-calendar-check fa-lg';
+      }
+      document.getElementById('paketTxt').innerText = user.durasi;
     }
 
     window.addEventListener('load', async () => {
@@ -598,6 +658,7 @@
       }
     });
 
+    // PING SERVER TIAP 10 DETIK (LANGSUNG TERDETEKSI BILA TANGGAL DIUBAH DI SHEET)
     setInterval(async () => {
       const savedUser = localStorage.getItem('_brc_user');
       if (savedUser) {
@@ -654,7 +715,8 @@
       const payload = {
         kode_toko: document.getElementById('loginKode').value,
         pin: document.getElementById('loginPin').value,
-        device_id: localDeviceId
+        device_id: localDeviceId,
+        device_info: navigator.userAgent
       };
 
       try {
@@ -688,37 +750,8 @@
       document.getElementById('topTokoKode').innerText = 'KODE: ' + user.kode_toko;
       document.getElementById('cardTokoName').innerText = user.nama_toko;
       document.getElementById('cardTokoKode').innerText = user.kode_toko;
-      document.getElementById('paketTxt').innerText = user.durasi;
 
-      const bannerWarning = document.getElementById('warningExpBanner');
-      if (user.durasi !== 'PERMANENT' && user.expired_at) {
-        const now = new Date();
-        const expDate = new Date(user.expired_at);
-        const diffDays = Math.ceil((expDate - now) / (1000 * 60 * 60 * 24));
-
-        if (diffDays <= 7 && diffDays > 0) {
-          bannerWarning.style.display = 'flex';
-          document.getElementById('badgeSisaHari').innerText = `Sisa: ${diffDays} Hari`;
-          document.getElementById('warningExpMsg').innerText = `Masa berlaku layanan toko Anda tersisa ${diffDays} hari lagi. Mohon koordinasi dengan Administrator.`;
-        } else {
-          bannerWarning.style.display = 'none';
-        }
-      } else {
-        bannerWarning.style.display = 'none';
-      }
-
-      if (user.durasi === 'PERMANENT') {
-        document.getElementById('bannerExpTitle').innerText = 'AKSES PERMANEN AKTIF';
-        document.getElementById('bannerExpSub').innerText = 'Tanpa Batas Waktu Kadaluarsa';
-        document.getElementById('tglBerakhir').innerText = 'Permanen';
-        document.getElementById('bannerExpIcon').className = 'fa-solid fa-infinity fa-lg';
-      } else {
-        const expFormatted = user.expired_at ? new Date(user.expired_at).toLocaleDateString('id-ID', {day:'numeric', month:'short', year:'numeric'}) : '-';
-        document.getElementById('bannerExpTitle').innerText = 'AKSES BERLANGGANAN AKTIF';
-        document.getElementById('bannerExpSub').innerText = 'Berlaku hingga: ' + expFormatted;
-        document.getElementById('tglBerakhir').innerText = expFormatted;
-        document.getElementById('bannerExpIcon').className = 'fa-solid fa-calendar-check fa-lg';
-      }
+      updateDisplayDates(user);
 
       await loadModulesClient(user);
       document.getElementById('loadingScreen').style.display = 'none';
