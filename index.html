@@ -109,15 +109,17 @@
       font-weight: 800; padding: 3px 8px; border-radius: 20px; white-space: nowrap;
     }
     .top-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
-    .theme-toggle-box {
+    
+    .toggle-box {
       background: var(--input-bg); border: 1px solid var(--card-border);
       border-radius: 20px; display: flex; padding: 2px; gap: 2px;
     }
-    .theme-btn {
+    .togg-btn {
       background: none; border: none; color: var(--text-muted); padding: 5px 8px;
-      border-radius: 12px; cursor: pointer; font-size: 12px;
+      border-radius: 12px; cursor: pointer; font-size: 12px; transition: 0.2s;
     }
-    .theme-btn.active { background: var(--accent-grad); color: #fff; }
+    .togg-btn.active { background: var(--accent-grad); color: #fff; }
+
     .user-pill {
       background: var(--input-bg); border: 1px solid var(--card-border);
       padding: 5px 10px; border-radius: 10px; font-size: 11px; font-weight: 700;
@@ -130,7 +132,7 @@
       display: flex; align-items: center; gap: 4px; white-space: nowrap;
     }
 
-    .portal-container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 16px; }
+    .portal-container { width: 100%; max-width: 1200px; margin: 0 auto; padding: 16px; transition: max-width 0.3s ease; }
 
     #warningExpBanner {
       background: var(--warning-bg); border: 1px solid var(--warning-border);
@@ -185,13 +187,6 @@
     }
 
     .modules-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; }
-    @media(max-width: 650px) {
-      .modules-grid { grid-template-columns: 1fr; }
-      .welcome-title { font-size: 22px; }
-      .top-nav { padding: 8px 12px; }
-      .user-pill span#topTokoName { max-width: 75px; overflow: hidden; text-overflow: ellipsis; }
-      .brand-title { display: none; }
-    }
 
     .module-card {
       background: var(--card-bg); border: 1px solid var(--card-border);
@@ -234,7 +229,6 @@
     #internalFrame { width: 100%; height: 100%; border: none; }
 
     #authContainer { max-width: 960px; margin: 20px auto; display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 24px; align-items: center; }
-    @media(max-width: 850px){ #authContainer { grid-template-columns: 1fr; margin-top: 0; } }
     .auth-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 20px; padding: 24px; box-shadow: var(--card-shadow); }
     .form-group { margin-bottom: 12px; }
     .form-label { display: block; font-size: 10px; font-weight: 700; color: var(--text-muted); margin-bottom: 4px; }
@@ -259,7 +253,6 @@
     .badge-system { background: rgba(16, 185, 129, 0.12); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.25); font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 6px; }
     .footer-desc { font-size: 12px; color: var(--text-muted); line-height: 1.5; margin-bottom: 12px; }
     .footer-rules-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-    @media (max-width: 700px) { .footer-rules-grid { grid-template-columns: 1fr; } .footer-alert-card { flex-direction: column; } }
     .rule-item {
       background: var(--input-bg); border: 1px solid var(--card-border);
       border-radius: 10px; padding: 8px 12px; font-size: 11px; color: var(--text-muted);
@@ -291,9 +284,35 @@
       width: 100%; padding: 12px; border-radius: 10px; border: none;
       background: var(--input-bg); color: var(--text); font-weight: 700; font-size: 12px; cursor: pointer;
     }
+
+    /* PENGATURAN MODE DESKTOP & MOBILE */
+    body[data-view="mobile"] .portal-container { max-width: 480px; }
+    body[data-view="mobile"] #authContainer { grid-template-columns: 1fr; }
+    body[data-view="mobile"] .modules-grid { grid-template-columns: 1fr; }
+    body[data-view="mobile"] .welcome-title { font-size: 22px; }
+    body[data-view="mobile"] .footer-rules-grid { grid-template-columns: 1fr; }
+    body[data-view="mobile"] .footer-alert-card { flex-direction: column; }
+    body[data-view="mobile"] .brand-title { display: none; }
+    body[data-view="mobile"] .user-pill span#topTokoName { max-width: 75px; overflow: hidden; text-overflow: ellipsis; }
+
+    body[data-view="desktop"] .portal-container { max-width: 1200px; }
+    body[data-view="desktop"] #authContainer { grid-template-columns: 1.1fr 0.9fr; }
+    body[data-view="desktop"] .modules-grid { grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); }
+    body[data-view="desktop"] .brand-title { display: inline-block; }
+
+    @media (max-width: 650px) {
+      body:not([data-view="desktop"]) .portal-container { max-width: 480px; }
+      body:not([data-view="desktop"]) #authContainer { grid-template-columns: 1fr; }
+      body:not([data-view="desktop"]) .modules-grid { grid-template-columns: 1fr; }
+      body:not([data-view="desktop"]) .welcome-title { font-size: 22px; }
+      body:not([data-view="desktop"]) .brand-title { display: none; }
+      body:not([data-view="desktop"]) .user-pill span#topTokoName { max-width: 75px; overflow: hidden; text-overflow: ellipsis; }
+      body:not([data-view="desktop"]) .footer-rules-grid { grid-template-columns: 1fr; }
+      body:not([data-view="desktop"]) .footer-alert-card { flex-direction: column; }
+    }
   </style>
 </head>
-<body data-theme="light">
+<body data-theme="light" data-view="mobile">
 
   <div id="loadingScreen">
     <div class="spinner-wrap">
@@ -327,10 +346,17 @@
     </div>
 
     <div class="top-actions">
-      <div class="theme-toggle-box">
-        <button class="theme-btn active" onclick="setTheme('light', this)"><i class="fa-solid fa-sun"></i></button>
-        <button class="theme-btn" onclick="setTheme('dark', this)"><i class="fa-solid fa-moon"></i></button>
-        <button class="theme-btn" onclick="setTheme('neon', this)"><i class="fa-solid fa-bolt"></i></button>
+      <!-- TOGGLE VIEW MODE: MOBILE & DESKTOP -->
+      <div class="toggle-box">
+        <button id="btnViewMobile" class="togg-btn active" onclick="setViewMode('mobile')" title="Mode Mobile"><i class="fa-solid fa-mobile-screen"></i></button>
+        <button id="btnViewDesktop" class="togg-btn" onclick="setViewMode('desktop')" title="Mode Desktop"><i class="fa-solid fa-desktop"></i></button>
+      </div>
+
+      <!-- TOGGLE THEME MODE -->
+      <div class="toggle-box">
+        <button class="togg-btn active theme-opt" onclick="setTheme('light', this)" title="Light"><i class="fa-solid fa-sun"></i></button>
+        <button class="togg-btn theme-opt" onclick="setTheme('dark', this)" title="Dark Space"><i class="fa-solid fa-moon"></i></button>
+        <button class="togg-btn theme-opt" onclick="setTheme('neon', this)" title="Cyber Neon"><i class="fa-solid fa-bolt"></i></button>
       </div>
 
       <div id="headerUserInfo" style="display:none; align-items:center; gap:6px;">
@@ -522,7 +548,7 @@
   <script>
     const API_URL = "https://script.google.com/macros/s/AKfycbzuN1LXzT2Jh963ob1LnxuxBdGsjzk6fNbP7hd-oggHZtHtiXuo9nAs47z1yrFqfOo1kQ/exec";
 
-    // REGISTRASI SERVICE WORKER UNTUK OPSI INSTAL DI GOOGLE CHROME
+    // SERVICE WORKER PWA
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('./sw.js')
@@ -537,9 +563,25 @@
       localStorage.setItem("_brc_device_id", localDeviceId);
     }
 
+    // FUNGSI TOGGLE MODE TAMPILAN: MOBILE & DESKTOP
+    function setViewMode(mode) {
+      document.body.setAttribute('data-view', mode);
+      document.getElementById('btnViewMobile').classList.toggle('active', mode === 'mobile');
+      document.getElementById('btnViewDesktop').classList.toggle('active', mode === 'desktop');
+      localStorage.setItem('_brc_view_mode', mode);
+    }
+
+    const savedView = localStorage.getItem('_brc_view_mode');
+    if (savedView) {
+      setViewMode(savedView);
+    } else {
+      setViewMode(window.innerWidth > 768 ? 'desktop' : 'mobile');
+    }
+
+    // FUNGSI TOGGLE THEME
     function setTheme(mode, elem) {
       document.body.setAttribute('data-theme', mode);
-      document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.theme-opt').forEach(b => b.classList.remove('active'));
       if (elem) elem.classList.add('active');
     }
 
@@ -578,14 +620,12 @@
       document.getElementById('expiredModal').style.display = 'none';
     }
 
-    // CHECK STATUS REALTIME: MENGUPDATE TANGGAL & AUTO-KICK BILA EXPIRED/DIHAPUS
     async function checkServerAccountStatus(user) {
       try {
         const res = await fetch(`${API_URL}?action=check_status&kode_toko=${encodeURIComponent(user.kode_toko)}&device_id=${encodeURIComponent(localDeviceId)}&_t=${Date.now()}`);
         const data = await res.json();
         
         if (!data.valid) {
-          // BILA EXPIRED ATAU STATUS BUKAN ACTIVE -> TENDANG LOGOUT KELUAR
           localStorage.removeItem('_brc_user');
           document.getElementById('portalDashboard').style.display = 'none';
           document.getElementById('authSection').style.display = 'block';
@@ -595,14 +635,11 @@
           showExpiredNotice(data.message || "Akses akun toko telah dinonaktifkan oleh Administrator.");
           return false;
         } else {
-          // UPDATE DATA EXPIRED TERBARU DARI GOOGLE SHEET KE MEMORI HP & TAMPILAN
           if (data.expired_at !== undefined) {
             user.expired_at = data.expired_at;
             user.durasi = data.durasi;
             user.status = data.status;
             localStorage.setItem('_brc_user', JSON.stringify(user));
-            
-            // Perbarui tanggal jatuh tempo seketika
             updateDisplayDates(user);
           }
           return true;
@@ -658,7 +695,6 @@
       }
     });
 
-    // PING SERVER TIAP 10 DETIK (LANGSUNG TERDETEKSI BILA TANGGAL DIUBAH DI SHEET)
     setInterval(async () => {
       const savedUser = localStorage.getItem('_brc_user');
       if (savedUser) {
