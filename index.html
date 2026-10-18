@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>BrandRetailCortex.store - Client Portal</title>
 
+  <!-- PWA COMPATIBILITY -->
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#070a14">
   <meta name="mobile-web-app-capable" content="yes">
@@ -14,6 +15,7 @@
   <link rel="apple-touch-icon" href="logo.jpeg">
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
   <style>
     :root {
       --bg: #f4f6fc;
@@ -52,7 +54,6 @@
       --warning-text: #fbbf24;
     }
     
-    /* REVISI THEME NEON: SOFT AURA GRADIENT, TANPA GARIS BORDER NORAK */
     [data-theme="neon"] {
       --bg: #04060d;
       --card-bg: linear-gradient(145deg, rgba(13, 19, 36, 0.95) 0%, rgba(18, 12, 38, 0.92) 100%);
@@ -75,7 +76,6 @@
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; -webkit-tap-highlight-color: transparent; }
     body { background-color: var(--bg); color: var(--text); min-height: 100vh; transition: 0.25s; overflow-x: hidden; position: relative; }
 
-    /* EFEK PENDARAN AURA GRADASI DI TEMA NEON */
     [data-theme="neon"] body::before {
       content: "";
       position: fixed;
@@ -222,11 +222,7 @@
       padding: 3px 8px; border-radius: 12px; margin-bottom: 4px;
     }
 
-    .modules-grid { 
-      display: grid; 
-      gap: 12px; 
-      width: 100%; 
-    }
+    .modules-grid { display: grid; gap: 12px; width: 100%; }
 
     .module-card {
       background: var(--card-bg); border: 1px solid var(--card-border);
@@ -262,12 +258,20 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     }
 
+    /* VIEWER MODAL - TOMBOL DOWNLOAD DINONAKTIFKAN */
     #iframeViewerModal { position: fixed; inset: 0; background: var(--bg); z-index: 99998; display: none; flex-direction: column; }
     .viewer-header {
-      height: 52px; background: var(--card-bg); border-bottom: 1px solid var(--card-border);
-      display: flex; align-items: center; justify-content: space-between; padding: 0 16px;
+      height: 54px; background: var(--card-bg); border-bottom: 1px solid var(--card-border);
+      display: flex; align-items: center; justify-content: space-between; padding: 0 14px;
+      gap: 10px;
     }
-    .iframe-box { flex: 1; width: 100%; height: calc(100vh - 52px); }
+    .btn-viewer-back {
+      background: var(--input-bg); border: 1px solid var(--card-border); color: var(--text);
+      padding: 7px 12px; border-radius: 10px; cursor: pointer; font-weight: 700; font-size: 11px;
+      display: inline-flex; align-items: center; gap: 6px; white-space: nowrap;
+    }
+
+    .iframe-box { flex: 1; width: 100%; height: calc(100vh - 54px); }
     #internalFrame { width: 100%; height: 100%; border: none; }
 
     #authContainer { width: 100%; max-width: 900px; margin: 10px auto; display: grid; gap: 16px; align-items: center; }
@@ -344,66 +348,27 @@
     .alert-title-txt { font-size: 14px; font-weight: 800; margin-bottom: 4px; }
     .alert-msg-txt { font-size: 12px; color: var(--text-muted); line-height: 1.5; margin-bottom: 16px; }
 
-    /* VIEW MODE LAYOUT CONFIG */
-    body[data-view="phone"] .portal-container {
-      max-width: 100% !important;
-      padding: 12px 10px !important;
-    }
-    body[data-view="phone"] .modules-grid {
-      grid-template-columns: 1fr !important;
-    }
-    body[data-view="phone"] #authContainer {
-      grid-template-columns: 1fr !important;
-    }
-    body[data-view="phone"] .footer-alert-card {
-      flex-direction: column !important;
-    }
-    body[data-view="phone"] .footer-rules-grid {
-      grid-template-columns: 1fr !important;
-    }
-    body[data-view="phone"] .brand-title {
-      display: none;
-    }
+    /* VIEW MODE LAYOUT */
+    body[data-view="phone"] .portal-container { max-width: 100% !important; padding: 12px 10px !important; }
+    body[data-view="phone"] .modules-grid { grid-template-columns: 1fr !important; }
+    body[data-view="phone"] #authContainer { grid-template-columns: 1fr !important; }
+    body[data-view="phone"] .footer-alert-card { flex-direction: column !important; }
+    body[data-view="phone"] .footer-rules-grid { grid-template-columns: 1fr !important; }
+    body[data-view="phone"] .brand-title { display: none; }
 
-    body[data-view="normal"] .portal-container {
-      max-width: 480px !important;
-      padding: 14px 12px !important;
-    }
-    body[data-view="normal"] .modules-grid {
-      grid-template-columns: 1fr !important;
-    }
-    body[data-view="normal"] #authContainer {
-      grid-template-columns: 1fr !important;
-    }
-    body[data-view="normal"] .footer-alert-card {
-      flex-direction: column !important;
-    }
-    body[data-view="normal"] .footer-rules-grid {
-      grid-template-columns: 1fr !important;
-    }
-    body[data-view="normal"] .brand-title {
-      display: none;
-    }
+    body[data-view="normal"] .portal-container { max-width: 480px !important; padding: 14px 12px !important; }
+    body[data-view="normal"] .modules-grid { grid-template-columns: 1fr !important; }
+    body[data-view="normal"] #authContainer { grid-template-columns: 1fr !important; }
+    body[data-view="normal"] .footer-alert-card { flex-direction: column !important; }
+    body[data-view="normal"] .footer-rules-grid { grid-template-columns: 1fr !important; }
+    body[data-view="normal"] .brand-title { display: none; }
 
-    body[data-view="desktop"] .portal-container {
-      max-width: 1200px !important;
-      padding: 18px 16px !important;
-    }
-    body[data-view="desktop"] .modules-grid {
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)) !important;
-    }
-    body[data-view="desktop"] #authContainer {
-      grid-template-columns: 1.1fr 0.9fr !important;
-    }
-    body[data-view="desktop"] .footer-alert-card {
-      flex-direction: row !important;
-    }
-    body[data-view="desktop"] .footer-rules-grid {
-      grid-template-columns: 1fr 1fr !important;
-    }
-    body[data-view="desktop"] .brand-title {
-      display: inline-block;
-    }
+    body[data-view="desktop"] .portal-container { max-width: 1200px !important; padding: 18px 16px !important; }
+    body[data-view="desktop"] .modules-grid { grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)) !important; }
+    body[data-view="desktop"] #authContainer { grid-template-columns: 1.1fr 0.9fr !important; }
+    body[data-view="desktop"] .footer-alert-card { flex-direction: row !important; }
+    body[data-view="desktop"] .footer-rules-grid { grid-template-columns: 1fr 1fr !important; }
+    body[data-view="desktop"] .brand-title { display: inline-block; }
   </style>
 </head>
 <body data-theme="light" data-view="phone">
@@ -635,18 +600,23 @@
     </footer>
   </main>
 
+  <!-- MODAL VIEWER IFRAME (SELURUH UNDUHAN DIBLOKIR TOTAL) -->
   <div id="iframeViewerModal">
     <div class="viewer-header">
       <div style="display:flex; align-items:center; gap:8px;">
-        <button onclick="closeModuleViewer()" style="background:var(--input-bg); border:1px solid var(--card-border); color:var(--text); padding:6px 10px; border-radius:8px; cursor:pointer; font-weight:700; font-size:11px;">
+        <button onclick="closeModuleViewer()" class="btn-viewer-back">
           <i class="fa-solid fa-arrow-left"></i> Kembali
         </button>
-        <span style="font-weight:800; font-size:12px;" id="viewerModulTitle">MODUL</span>
+        <span style="font-weight:800; font-size:12px; max-width: 180px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" id="viewerModulTitle">MODUL</span>
       </div>
-      <span class="status-pill-online"><i class="fa-solid fa-shield-halved"></i> SECURE SESSION</span>
+
+      <div>
+        <span class="status-pill-online"><i class="fa-solid fa-shield-halved"></i> SECURE VIEW</span>
+      </div>
     </div>
     <div class="iframe-box">
-      <iframe id="internalFrame" sandbox="allow-scripts allow-forms allow-same-origin allow-downloads allow-popups allow-popups-to-escape-sandbox"></iframe>
+      <!-- HARD-BLOCK: Izin allow-downloads & allow-popups ditiadakan -->
+      <iframe id="internalFrame" sandbox="allow-scripts allow-forms allow-same-origin"></iframe>
     </div>
   </div>
 
@@ -989,7 +959,8 @@
 
     function openInternalModule(nama, url) {
       document.getElementById('viewerModulTitle').innerText = nama.toUpperCase();
-      document.getElementById('internalFrame').src = url;
+      const frame = document.getElementById('internalFrame');
+      frame.src = url;
       document.getElementById('iframeViewerModal').style.display = 'flex';
     }
 
