@@ -258,7 +258,7 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     }
 
-    /* VIEWER MODAL - TOMBOL DOWNLOAD DINONAKTIFKAN */
+    /* VIEWER MODAL - TAMPILAN BERSIH TANPA TOMBOL EKSTERNAL */
     #iframeViewerModal { position: fixed; inset: 0; background: var(--bg); z-index: 99998; display: none; flex-direction: column; }
     .viewer-header {
       height: 54px; background: var(--card-bg); border-bottom: 1px solid var(--card-border);
@@ -600,7 +600,7 @@
     </footer>
   </main>
 
-  <!-- MODAL VIEWER IFRAME (SELURUH UNDUHAN DIBLOKIR TOTAL) -->
+  <!-- MODAL VIEWER IFRAME (IZIN DOWNLOAD & POPUP DIBUKA LENGKAP) -->
   <div id="iframeViewerModal">
     <div class="viewer-header">
       <div style="display:flex; align-items:center; gap:8px;">
@@ -615,8 +615,8 @@
       </div>
     </div>
     <div class="iframe-box">
-      <!-- HARD-BLOCK: Izin allow-downloads & allow-popups ditiadakan -->
-      <iframe id="internalFrame" sandbox="allow-scripts allow-forms allow-same-origin"></iframe>
+      <!-- IZIN DOWNLOAD & POPUP DIBUKA SECARA RESMI -->
+      <iframe id="internalFrame" sandbox="allow-scripts allow-forms allow-same-origin allow-downloads allow-popups allow-modals"></iframe>
     </div>
   </div>
 
